@@ -75,6 +75,24 @@ input,textarea,select{font-size:16px}
 .news-ribbon.paused .news-ribbon-track{animation-play-state:paused}
 @media(prefers-reduced-motion:reduce){#tickerPause{display:none}}
 @media(max-width:640px){.hero{min-height:auto}.hero h1{font-size:clamp(32px,9vw,48px)}}
+
+/* Platform creative coach: high-contrast white text with restrained pink-red accents. */
+.coach-panel{margin:24px 0;padding:clamp(20px,3vw,34px);border:1px solid #a94a6b;border-radius:20px;background:linear-gradient(135deg,#210d1d,#120c17 70%);box-shadow:0 14px 50px #0007}
+.coach-panel h2{font-size:clamp(25px,3vw,38px);line-height:1.16;letter-spacing:-.7px;margin:12px 0;color:#fff}
+.coach-accent{color:#ff537f}.coach-intro{color:#f4e7ee;max-width:820px;line-height:1.65}
+.coach-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.coach-fields label,.coach-bottom label{display:block;color:#fff;font-weight:750;font-size:13px}
+.coach-fields textarea,.coach-bottom select{display:block;margin-top:9px;width:100%;background:#0c0b12;color:#fff;border:1px solid #a35576;border-radius:11px;padding:13px;font:inherit;line-height:1.5}
+.coach-fields textarea:focus,.coach-bottom select:focus{outline:2px solid #ff638e;outline-offset:2px}
+.coach-bottom{display:flex;gap:18px;justify-content:space-between;align-items:end;flex-wrap:wrap;margin:18px 0}
+.coach-bottom select{min-width:160px}.coach-results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.coach-results>p,.coach-results>.coach-note{grid-column:1/-1;color:#f5e8f0}
+.coach-card{border:1px solid #69304a;border-radius:12px;background:#180e1b;padding:17px;min-width:0}
+.coach-card .micro-label{color:#ff8fb0}.coach-card h3{color:#fff;font-size:17px;margin:8px 0}
+.coach-card p{color:#fff;font-size:14px;line-height:1.55;margin:8px 0}
+.coach-card small{color:#f1b9cf;line-height:1.5;display:block}
+.coach-note{border-top:1px solid #743b56;padding-top:12px;font-size:13px}
+@media(max-width:780px){.coach-fields{grid-template-columns:1fr}.coach-results{grid-template-columns:1fr}.coach-bottom{align-items:stretch}.coach-bottom button{width:100%}}
 </style></head><body>
 <header><div class="brand"><span class="brand-mark">▼</span> VIRAL<span>FORGE</span><small> // SIGNAL CONTROL</small></div><div class="badge"><span class="status-dot"></span> PUBLIC PREVIEW · FIVE PLATFORMS</div></header>
 <main class="shell">
@@ -84,7 +102,16 @@ input,textarea,select{font-size:16px}
 <div class="auth"><label for="key">Local agent key</label><input type="password" id="key" placeholder="Enter AGENT_API_KEY from .env" autocomplete="off"><button class="button secondary" onclick="checkAccount()">Check connection</button></div>
 <nav><button id="tab-analyze" class="active" onclick="showTab('analyze')">01 / Analyze content</button><button id="tab-trends" onclick="showTab('trends')">02 / Community trends</button><button id="tab-news" onclick="showTab('news')">03 / Daily news</button><button id="tab-connect" onclick="showTab('connect')">04 / Connected platforms</button><button id="tab-convert" onclick="showTab('convert')">05 / Conversion lab</button></nav>
 <div id="feedback" aria-live="polite"></div>
-<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post URL to identify the platform, retrieve available public metadata and get practical creative recommendations.</p></div><span class="link-badge">URL FIRST</span></div><form id="linkForm" onsubmit="event.preventDefault();analyzeLink()"><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">ANALYZE LINK ↗</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><div class="link-output" id="linkResults" aria-live="polite"><div class="micro-label">AWAITING SIGNAL</div><h3>Ready when you are.</h3><p>Your platform, post information, and recommendations will appear here after you paste a link.</p><span class="link-badge" style="align-self:flex-start">● FIVE PLATFORMS SUPPORTED</span></div></div><div class="layout">
+<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post URL to identify the platform, retrieve available public metadata and get practical creative recommendations.</p></div><span class="link-badge">URL FIRST</span></div><form id="linkForm" onsubmit="event.preventDefault();analyzeLink()"><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">ANALYZE LINK ↗</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><section class="coach-panel" aria-labelledby="coach-title">
+<div class="micro-label">CREATIVE LAB // PLATFORM RESPONSE PLAYBOOK</div>
+<h2 id="coach-title">Make your next edit stronger<span class="coach-accent">.</span></h2>
+<p class="coach-intro">Paste your post link above, then optionally describe the first three seconds or add a transcript. Get specific, testable edit ideas for each platform—no secret algorithm claims.</p>
+<div class="coach-fields"><div><label for="coachOpening">What happens in the first 3 seconds?</label><textarea id="coachOpening" rows="3" maxlength="1200" placeholder="Example: I open with a wide shot, then explain the problem…"></textarea></div>
+<div><label for="coachTranscript">Transcript / voiceover (optional)</label><textarea id="coachTranscript" rows="3" maxlength="18000" placeholder="Paste what is said in the video for more context…"></textarea></div></div>
+<div class="coach-bottom"><label for="coachGoal">Optimization goal <select id="coachGoal"><option value="reach">Reach</option><option value="engagement">Engagement</option><option value="leads">Leads</option><option value="sales">Sales</option></select></label>
+<button class="button" id="coachRun" type="button">GENERATE EDIT PLAN ↗</button></div>
+<div id="coachResults" aria-live="polite" class="coach-results"><p>Choose a video URL above and generate a platform-specific edit plan.</p></div>
+</section><div class="link-output" id="linkResults" aria-live="polite"><div class="micro-label">AWAITING SIGNAL</div><h3>Ready when you are.</h3><p>Your platform, post information, and recommendations will appear here after you paste a link.</p><span class="link-badge" style="align-self:flex-start">● FIVE PLATFORMS SUPPORTED</span></div></div><div class="layout">
 <div class="panel"><h2>Optional: analyze your own draft</h2><p>What are you about to post? Provide your real concept; the agent will score its preparation, not promise virality.</p>
 <div class="fields"><div><label>Platform</label><select id="platform"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option></select></div><div><label>Goal</label><select id="goal"><option value="reach">Audience reach</option><option value="leads">Qualified leads</option><option value="sales">Sales / revenue</option></select></div><div><label>Community / niche</label><input id="niche" value="filmmaking" placeholder="e.g. streetwear, fitness"></div><div><label>Region</label><input id="region" value="US" maxlength="12"></div></div>
 <label>Post topic</label><input id="topic" value="How a cinematic commercial gets filmed" placeholder="Specific video concept">
@@ -238,4 +265,40 @@ pauseButton.addEventListener('click',()=>{
  pauseButton.textContent=paused?'Resume':'Pause';
 });
 
+
+/* Platform-specific creative recommendations are hypotheses, not hidden ranking signals. */
+const COACH_RULES={
+tiktok:[['First-second hook','Lead with the strongest moment or outcome before the explanation.','First 2-second retention and average watch duration'],['Watch-through and rewatch','Remove dead air and make the payoff worth finishing.','Completion and replay rates'],['Searchable context','State the topic on screen and use a precise descriptive caption.','Search discovery and qualified engagement']],
+instagram:[['Shareable premise','Show the payoff early and make the insight useful to a friend.','Shares per reach and saves per reach'],['Readable mobile edit','Keep captions inside safe areas and use a clear cover frame.','Non-follower reach and retention'],['Originality','Use original footage and avoid recycled watermarks.','Eligible reach and meaningful engagement']],
+x:[['Conversation starter','Open with a clear claim or specific question; explain why the clip matters.','Meaningful replies and reposts per impression'],['Sound-off video','Add accurate subtitles and make the first frame understandable.','Video completion and engagement quality'],['Native context','Use a concise, accurate post rather than engagement bait.','Dwell and qualified link clicks']],
+facebook:[['Story arc','Establish context, tension and a satisfying resolution.','Watch time and meaningful comments'],['Silent viewing','Use large readable subtitles and an immediately clear visual.','3-second views and retention'],['Community value','Invite a genuine discussion relevant to the story.','Meaningful shares and comments']],
+youtube:[['Title + thumbnail promise','Make one specific promise and deliver it immediately in the opening.','Impression click-through and first 30-second retention'],['Retention edit','Cut slow intros and vary visuals as information changes.','Audience retention curve and average view duration'],['Next video journey','Close with a relevant next step or related video.','End-screen click-through and returning viewers']]
+};
+function coachPlan(platform,transcript,opening,goal,caption){
+ const cards=COACH_RULES[platform].map(([focus,suggestion,metric],i)=>({focus,suggestion,metric,priority:i+1}));
+ if(opening)cards.unshift({focus:'Opening rewrite',suggestion:'Test a version that begins with the strongest visual or result instead of this opening: “'+opening.slice(0,130)+'”',metric:'First 3-second retention',priority:0});
+ else if(transcript||caption)cards.push({focus:'Hook experiment',suggestion:'Turn the clearest concrete takeaway in your supplied text into a direct opening hook; compare with a question-led version.',metric:'Early retention and qualified shares',priority:4});
+ else cards.push({focus:'Add more context',suggestion:'Add the opening description or a transcript to receive advice grounded in your actual content.',metric:'No observed metric available',priority:4});
+ if(goal==='sales'||goal==='leads')cards.push({focus:'Conversion path',suggestion:'Show the benefit first, then use one relevant CTA with a trackable destination.',metric:'Qualified clicks and conversions per 1,000 views',priority:5});
+ return cards;
+}
+async function runCreativeCoach(){
+ const target=$('coachResults'),button=$('coachRun'),opening=$('coachOpening').value.trim(),transcript=$('coachTranscript').value.trim(),goal=$('coachGoal').value;
+ let info;try{info=postIdentity($('postUrl').value)}catch(e){target.innerHTML='<p>'+esc(e.message)+'</p>';return;}
+ button.disabled=true;button.textContent='BUILDING EDIT PLAN…';
+ try{
+  let plan,level='creator-provided details';
+  if(!STATIC_PREVIEW){
+   const result=await api('/api/creative-coach','POST',{url:info.url,opening_seconds:opening,transcript,goal});
+   plan=result.recommendations.map(x=>({focus:x.focus,suggestion:x.suggestion,metric:x.validation_metric,priority:x.priority}));
+   level=result.evidence_level;
+  }else{
+   plan=coachPlan(info.platform,transcript,opening,goal,'');
+   level=transcript?'creator-provided transcript':opening?'creator-provided opening':'URL recognition only';
+  }
+  target.innerHTML=plan.map((x,i)=>'<article class="coach-card"><div class="micro-label">EDIT '+(i+1)+' / '+esc(PLATFORM_NAMES[info.platform])+'</div><h3>'+esc(x.focus)+'</h3><p>'+esc(x.suggestion)+'</p><small>Measure: '+esc(x.metric)+'</small></article>').join('')+'<div class="coach-note"><b>Evidence:</b> '+esc(level)+'. These are creative experiments, not guaranteed ranking triggers. This preview has not watched the video or measured private platform signals. Validate changes against actual creator analytics.</div>';
+ }catch(e){target.innerHTML='<p>'+esc(e.message)+'</p>';}
+ finally{button.disabled=false;button.textContent='GENERATE EDIT PLAN ↗'}
+}
+$('coachRun').addEventListener('click',runCreativeCoach);
 </script></body></html>
