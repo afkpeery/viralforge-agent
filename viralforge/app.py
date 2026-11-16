@@ -14,6 +14,7 @@ from .models import Draft, Trend, Observation, Campaign, ConversionEvent, Exposu
 from .storage import Store
 from .engine import orchestrate, top_trends, choose_variants, momentum_opportunities, algorithm_audit
 from . import connectors
+from .link_analysis import LinkSubmission, LinkError, inspect_public_link
 
 class Settings(BaseSettings):
     model_config=SettingsConfigDict(env_file='.env', extra='ignore')
@@ -190,6 +191,22 @@ def trends(platform:str, region:str='US',niche:str='',community:str='',limit:int
     ranked=top_trends(store.trends(platform,region),platform,region,niche,community,limit)
     return {'trends':ranked,'fresh_count':sum(t['live'] for t in ranked),
             'notice':'No independent platform-wide trend access is implied; sources and timestamps are shown.'}
+
+@app.post('/api/link/analyze',dependencies=[Auth])
+async def analyze_public_link(submission: LinkSubmission):
+    """Inspect an allowed public post URL through official oEmbed endpoints."""
+    try:
+        return await inspect_public_link(submission.url)
+    except LinkError as exc:
+        raise HTTPException(422,detail=str(exc)) from exc
+
+@app.get('/data/trend_news.json',include_in_schema=False)
+def news_snapshot():
+    from fastapi.responses import JSONResponse
+    path=Path(__file__).resolve().parent.parent/'data'/'trend_news.json'
+    if not path.is_file():
+        return JSONResponse({'generated_at':None,'feeds':{}})
+    return FileResponse(path,media_type='application/json')
 
 @app.post('/api/analyze',dependencies=[Auth])
 def analyze(draft:Draft):
