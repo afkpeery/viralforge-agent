@@ -215,6 +215,24 @@ async def review_caption(platform: str, caption: str) -> str:
         return ''
 
 
+
+# Creator-supplied transcript and opening details improve recommendations without claiming footage access.
+from .creative_coach import CreativeBrief, improvement_plan
+
+@app.post('/api/creative-coach',dependencies=[Auth])
+async def creative_coach(submission: CreativeBrief):
+    try:
+        metadata=await inspect_public_link(submission.url)
+        plan=improvement_plan(metadata['platform'],
+                              caption=metadata.get('metadata',{}).get('title_or_caption',''),
+                              transcript=submission.transcript,
+                              opening_seconds=submission.opening_seconds,
+                              goal=submission.goal,
+                              audience=submission.audience)
+        return {**metadata,**plan}
+    except LinkError as exc:
+        raise HTTPException(status_code=422,detail=str(exc)) from exc
+
 @app.post('/api/link/analyze',dependencies=[Auth])
 async def analyze_public_link(submission: LinkSubmission):
     """Inspect an allowed public post URL through official oEmbed endpoints."""
