@@ -28,11 +28,21 @@ def _fetch(url):
 def build_snapshot(fetch=None,now=None,previous=None):
     now=now or datetime.now(timezone.utc);fetch=fetch or _fetch;previous=previous or {};feeds={};errors={}
     for platform,query in FEEDS.items():
-        url='https://news.google.com/rss/search?'+urllib.parse.urlencode({'q':query+' when:3d','hl':'en-US','gl':'US','ceid':'US:en'})
-        try:feeds[platform]=parse_rss(fetch(url),platform,now)
-        except (OSError,TimeoutError,ET.ParseError,ValueError) as exc:
-            errors[platform]=str(exc)[:140]
-            feeds[platform]=[x for x in previous.get('feeds',{}).get(platform,[]) if isinstance(x,dict) and x.get('headline') and x.get('url')][:8]
+        fallback_query={'tiktok':'TikTok creators', 'instagram':'Instagram', 'x':'Twitter X social media', 'facebook':'Facebook Meta', 'youtube':'YouTube Shorts'}[platform]
+        results=[]
+        issue=None
+        for terms in (query+' when:3d',fallback_query+' when:3d'):
+            url='https://news.google.com/rss/search?'+urllib.parse.urlencode({'q':terms,'hl':'en-US','gl':'US','ceid':'US:en'})
+            try:
+                results=parse_rss(fetch(url),platform,now)
+                if results:break
+            except (OSError,TimeoutError,ET.ParseError,ValueError) as exc:
+                issue=str(exc)[:140]
+        if not results:
+            results=[x for x in previous.get('feeds',{}).get(platform,[])
+                     if isinstance(x,dict) and x.get('headline') and x.get('url')][:8]
+            if issue:errors[platform]=issue
+        feeds[platform]=results
     return {'generated_at':now.isoformat(),'feed_type':'social_platform_news_not_verified_in_app_trends','source':'Google News RSS index / publisher headlines','feeds':feeds,'errors':errors}
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',default='data/trend_news.json');args=parser.parse_args()

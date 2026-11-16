@@ -32,6 +32,18 @@ jobs:
           cp index.html _site/index.html
           cp data/trend_news.json _site/data/trend_news.json
           touch _site/.nojekyll
+          python - <<'PY'
+          import json,urllib.request
+          from pathlib import Path
+          url='https://afkpeery.github.io/viralforge-agent/data/trend_news.json'
+          try:
+              with urllib.request.urlopen(url,timeout=9) as response:
+                  data=json.loads(response.read(450000))
+              if isinstance(data.get('feeds'),dict):
+                  Path('_site/data/trend_news.json').write_text(json.dumps(data),encoding='utf8')
+          except Exception as exc:
+              print('Previous news snapshot unavailable:', type(exc).__name__)
+          PY
           python scripts/update_news.py --output _site/data/trend_news.json
       - uses: actions/upload-pages-artifact@v3
         with:
