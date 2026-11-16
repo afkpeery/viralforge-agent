@@ -54,6 +54,7 @@ def classify_url(raw: str)->dict:
     elif platform=='tiktok':
         match=re.search(r'/video/(\d{8,25})$',path)
         if match:post_id=match.group(1)
+        elif re.fullmatch(r'/t/[\w-]+',path):post_id=path.split('/')[-1]
         elif host in ('vm.tiktok.com','vt.tiktok.com') and re.fullmatch(r'/[\w-]+',path):post_id=path[1:]
         else:raise LinkError('Provide a TikTok video or official short link.')
     elif platform=='instagram':
@@ -61,16 +62,17 @@ def classify_url(raw: str)->dict:
         if not match:raise LinkError('Provide an Instagram Reel or post URL.')
         post_id=match.group(1)
     elif platform=='x':
-        match=re.fullmatch(r'/[^/]+/status/(\d+)',path)
+        match=re.fullmatch(r'/(?:[^/]+|i/web)/status/(\d+)',path)
         if not match:raise LinkError('Provide an X post URL with /status/...')
         post_id=match.group(1)
     else:
         match=re.search(r'/(?:videos|reel|posts|share/[rvp])/([\w.-]+)',path)
         if match:post_id=match.group(1)
+        elif path in ('/permalink.php','/story.php') and query.get('story_fbid'):post_id=query['story_fbid'][0]
         elif path=='/watch' and query.get('v'):post_id=query['v'][0]
         elif host in ('fb.watch','www.fb.watch') and re.fullmatch(r'/[\w-]+',path):post_id=path[1:]
         else:raise LinkError('Provide a Facebook video, Reel or post URL.')
-    url=urlunsplit(('https',host,path,parts.query if (platform in ('youtube','facebook') and path=='/watch') else '',''))
+    url=urlunsplit(('https',host,path,parts.query if (platform in ('youtube','facebook') and path in ('/watch','/permalink.php','/story.php')) else '',''))
     return {'platform':platform,'post_id':post_id,'url':url}
 
 def _endpoint(platform,url):
@@ -104,7 +106,10 @@ async def inspect_public_link(raw_url: str,client: httpx.AsyncClient|None=None)-
         if not isinstance(payload,dict):raise ValueError('Unexpected metadata response')
         title=str(payload.get('title') or '').strip()[:600]
         author=str(payload.get('author_name') or '').strip()[:160]
-        if not title and payload.get('html'):title=plain_html(str(payload['html']))[:600]
+        if not title and info['platform'] in ('x','facebook'):
+            # Both providers commonly wrap the actual post text in a blockquote paragraph.
+            paragraph=re.search(r'<blockquote\b[^>]*>.*?<p\b[^>]*>(.*?)</p>',str(payload.get('html','')),re.I|re.S)
+            if paragraph:title=plain_html(paragraph.group(1))[:600]
         if not title:note='Provider returned embed information without a readable caption.'
     except (httpx.HTTPError,ValueError,TypeError):
         note='Public embed metadata is restricted, unavailable or temporarily rate-limited.'
