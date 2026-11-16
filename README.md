@@ -125,3 +125,10 @@ Get ranked actions through `GET /api/momentum/tiktok` or `GET /api/momentum/inst
 - TikTok Creative Center Trends: https://ads.tiktok.com/resources/help/article/how-to-use-trends
 - Instagram Platform (Instagram Login, professional accounts): https://developers.facebook.com/docs/instagram-platform/reference/instagram-media/v21.0/
 - Meta's Instagram Insights reference: https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/insights
+
+
+## GitHub Pages static preview (80s VHS theme)
+
+The repository root contains a standalone `index.html` with an original red-and-pink 1980s-inspired visual treatment and responsive controls. On GitHub choose **Settings → Pages → Deploy from a branch → main / (root)** to host it, if Pages is available for your account. The preview's content analysis is explicitly a browser-only illustrative heuristic; it does not claim live platform access or a learned model. TikTok/Instagram OAuth, trend feeds, storage, click attribution, and the predictive engine require running the Python FastAPI service separately. Never paste real API secrets into a static public website.
+
+The full app uses `web/index.html` served by FastAPI at `/` with real API endpoints and a server-managed `AGENT_API_KEY`.
