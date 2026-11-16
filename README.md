@@ -148,3 +148,12 @@ The `news` tab contains **TikTok, Instagram, X, Facebook, and YouTube** subsecti
 - Chromium responsive layout checks use desktop and mobile breakpoints; live network provider responses depend on deployment credentials and policy.
 
 Don't store creator tokens or API keys in public GitHub Pages JavaScript.
+## Creative Coach: platform-specific video improvement plans
+
+Paste a TikTok, Instagram, X, Facebook, or YouTube video/post URL in the **Analyze** tab, then optionally describe the first three seconds and paste the video's transcript. Choose reach, engagement, leads, or sales and select **Generate Edit Plan**.
+
+The GitHub Pages site offers an immediate platform-specific editorial checklist without needing a backend. The FastAPI endpoint `POST /api/creative-coach` (with `X-Agent-Key`) uses the same five-platform creative guidance plus public oEmbed caption data and optional creator-supplied opening/transcript. Response recommendations include an edit, a metric to validate it, and evidence limitations.
+
+Example JSON: `{"url":"https://www.youtube.com/watch?v=abcdefghijk","transcript":"...","opening_seconds":"...","goal":"sales"}`.
+
+**Scope:** These are testable suggestions for hooks, pacing, subtitles, shareability, packaging and conversion—not access to proprietary ranking algorithms. The system does not inspect video frames or audio directly from a pasted URL, and it does not claim guaranteed viral reach. For shot-by-shot analysis, a separately authorized media-processing service is still needed.
