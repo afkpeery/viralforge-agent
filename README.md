@@ -127,8 +127,24 @@ Get ranked actions through `GET /api/momentum/tiktok` or `GET /api/momentum/inst
 - Meta's Instagram Insights reference: https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/insights
 
 
-## GitHub Pages static preview (80s VHS theme)
+## 2026 redesign: high-contrast 1980s dashboard, links and daily news
 
-The repository root contains a standalone `index.html` with an original red-and-pink 1980s-inspired visual treatment and responsive controls. On GitHub choose **Settings → Pages → Deploy from a branch → main / (root)** to host it, if Pages is available for your account. The preview's content analysis is explicitly a browser-only illustrative heuristic; it does not claim live platform access or a learned model. TikTok/Instagram OAuth, trend feeds, storage, click attribution, and the predictive engine require running the Python FastAPI service separately. Never paste real API secrets into a static public website.
+The **public GitHub Pages site** is a static client. It now displays white primary text, accessible pink/red highlights, a stronger but lower-glare 1980s VHS/synthwave background, a scrolling newsroom ribbon and five platform news tabs. Both `index.html` (GitHub Pages) and `web/index.html` (Python server) contain the same UI.
 
-The full app uses `web/index.html` served by FastAPI at `/` with real API endpoints and a server-managed `AGENT_API_KEY`.
+### Paste-a-link analysis
+
+The URL-first form accepts HTTPS links to **TikTok, Instagram, X (Twitter), Facebook and YouTube**. The static preview validates the platform and attempts to retrieve a public caption/title through the optional third-party noembed service. When that metadata is available, it supplies basic, transparent creative suggestions. When unavailable, it still recognizes the valid URL, but does **not** fabricate a caption, view count, engagement statistics or viral prediction. Some publishers block public embed metadata and short-link resolution. The browser may also be prevented from contacting noembed by network restrictions.
+
+For server-side source handling, start FastAPI and submit `POST /api/link/analyze` with `{ "url":"https://..." }` and an `X-Agent-Key` header. The server uses fixed official provider oEmbed endpoints (YouTube, TikTok, X, Meta), returns limited public metadata and recommendations, and does **not** fetch arbitrary user-controlled hosts. Personal content, post/video frames, private insights, transcripts, music, and historic outcomes are **not** exposed through oEmbed. Production-level content understanding and calibrated virality estimates require approved platform access, permitted media or transcript processing, and account-specific training history. The existing pre-publish draft analyzer remains available for TikTok and Instagram.
+
+### News / daily social signals
+
+The `news` tab contains **TikTok, Instagram, X, Facebook, and YouTube** subsections, and a horizontal scrolling headline ribbon. The data source is public Google News RSS search results about each platform. These are industry headlines about creator culture and platform trends, **not** verified in-platform trending sounds, posts, hashtags or recommendation-rank data. Cards show the headline, publisher and timestamp; the source is linked rather than scraped. `scripts/update_news.py` creates `data/trend_news.json`. `.github/workflows/pages.yml` publishes the site and regenerates the news snapshot when `main` changes, every 6 hours (UTC), or on manual dispatch. GitHub Actions schedules can be delayed; feed failures are displayed instead of replaced by fabricated content. The Python app serves its local `data/trend_news.json`, which can also be regenerated with `python scripts/update_news.py`.
+
+### Verification
+
+- `pytest -q` runs isolated URL-validation, metadata-only, news parsing and existing algorithm/API tests.
+- `node --check` on the extracted `index.html` inline JS confirms syntax.
+- Chromium responsive layout checks use desktop and mobile breakpoints; live network provider responses depend on deployment credentials and policy.
+
+Don't store creator tokens or API keys in public GitHub Pages JavaScript.

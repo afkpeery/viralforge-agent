@@ -1,7 +1,9 @@
-name: Deploy ViralForge static preview
+name: Publish ViralForge and refresh news
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -18,13 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/configure-pages@v5
         with:
           enablement: true
-      - run: |
-          mkdir -p _site
+      - name: Prepare static site and fetch news
+        run: |
+          mkdir -p _site/data
           cp index.html _site/index.html
+          cp data/trend_news.json _site/data/trend_news.json
           touch _site/.nojekyll
+          python scripts/update_news.py --output _site/data/trend_news.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
