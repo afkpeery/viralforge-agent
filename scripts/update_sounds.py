@@ -31,7 +31,7 @@ def https_url(value: object) -> str:
 
 
 def text(value: object, limit: int = 140) -> str:
-    return re.sub(r"\\s+", " ", str(value or "")).strip()[:limit]
+    return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
 
 
 def number(value: object, *, integer: bool = False):
