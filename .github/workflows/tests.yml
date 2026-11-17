@@ -17,5 +17,13 @@ jobs:
           cache: 'pip'
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Check JavaScript syntax
+        run: node --check assets/video-lab.js
+      - name: Verify preview asset links
+        run: |
+          test -s assets/studio-v3.css
+          test -s assets/video-lab.js
+          grep -q 'assets/video-lab.js' index.html
+          grep -q 'id="videoLab"' index.html
       - name: Run tests
         run: pytest -q
