@@ -18,12 +18,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Check JavaScript syntax
-        run: node --check assets/video-lab.js
+        run: |
+          node --check assets/video-lab.js
+          node --check assets/sound-tracker.js
+          node --check assets/clip-studio.js
       - name: Verify preview asset links
         run: |
           test -s assets/studio-v3.css
           test -s assets/video-lab.js
+          test -s assets/sound-tracker.js
+          test -s assets/clip-studio.js
+          test -s assets/sound-clip.css
+          test -s scripts/update_sounds.py
           grep -q 'assets/video-lab.js' index.html
           grep -q 'id="videoLab"' index.html
+          grep -q 'id="view-sounds"' index.html
+          grep -q 'id="view-clips"' index.html
+          grep -q 'assets/sound-tracker.js' index.html
+          grep -q 'assets/clip-studio.js' index.html
       - name: Run tests
         run: pytest -q
