@@ -261,6 +261,14 @@ def news_snapshot():
         return JSONResponse({'generated_at':None,'feeds':{}})
     return FileResponse(path,media_type='application/json')
 
+@app.get('/data/trend_sounds.json',include_in_schema=False)
+def sounds_snapshot():
+    from fastapi.responses import JSONResponse
+    path=Path(__file__).resolve().parent.parent/'data'/'trend_sounds.json'
+    if not path.is_file():
+        return JSONResponse({'checked_at':None,'sounds':[],'status':'feed_not_configured'})
+    return FileResponse(path,media_type='application/json')
+
 @app.post('/api/analyze',dependencies=[Auth])
 def analyze(draft:Draft):
     return orchestrate(draft,store)
