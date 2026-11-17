@@ -99,3 +99,9 @@ footer{color:#f2cbdc!important}
 @media(max-width:980px){.lab-columns{grid-template-columns:1fr}.lab-monitor{display:grid;grid-template-columns:1fr 1fr;gap:5px 18px}.lab-monitor h3,.lab-monitor>p,.lab-monitor-label{grid-column:1/-1}}
 @media(max-width:700px){.link-grid{grid-template-columns:1fr}.link-grid>.linkbox,.link-grid>.link-output,.link-grid>.video-lab,.link-grid>.coach-panel{grid-column:1/-1}.lab-plan{grid-template-columns:1fr}.lab-topline h2{font-size:30px}.lab-monitor{display:block}.lab-player{min-height:195px}nav{top:0;overflow:auto;white-space:nowrap;flex-wrap:nowrap}nav button{flex-shrink:0;font-size:12px}.hero-art{opacity:.45}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.lab-meter div{transition:none}}
+
+/* Sampled-frame visual storyboard: local JPEG snapshots are never sent to the server. */
+.lab-storyboard{display:flex;gap:10px;overflow-x:auto;padding:12px 2px 16px;scrollbar-color:#df5b8b #230f1d;scrollbar-width:thin}
+.lab-frame{margin:0;flex:0 0 clamp(112px,14vw,158px);border:1px solid #873e61;background:#170c18;border-radius:11px;padding:6px;box-shadow:0 7px 23px #0006}
+.lab-frame img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#06070a}
+.lab-frame figcaption{font-size:11px;font-weight:800;letter-spacing:.5px;color:#ffd4e3;padding:7px 3px 2px}
