@@ -1,0 +1,11 @@
+{
+  "checked_at": null,
+  "last_success_at": null,
+  "status": "feed_not_configured",
+  "source": "No approved sound chart connected",
+  "sound_count": 0,
+  "sounds": [],
+  "error": null,
+  "cadence_hours": 8,
+  "disclaimer": "Source-reported observations, not independent or guaranteed platform-wide rankings."
+}
