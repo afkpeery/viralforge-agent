@@ -1,9 +1,9 @@
-name: Publish ViralForge and refresh news
+name: Publish ViralForge and refresh news + sound radar
 on:
   push:
     branches: [main]
   schedule:
-    - cron: '17 */6 * * *'
+    - cron: '17 */8 * * *'
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,28 +26,33 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Prepare static site and fetch news
+      - name: Prepare static site and refresh news + licensed sound chart
+        env:
+          SOUND_FEED_URL: ${{ secrets.SOUND_FEED_URL }}
+          SOUND_FEED_BEARER_TOKEN: ${{ secrets.SOUND_FEED_BEARER_TOKEN }}
         run: |
           mkdir -p _site/data _site/assets
           cp index.html _site/index.html
-          cp assets/studio-v3.css assets/video-lab.js _site/assets/
-          test -s _site/assets/studio-v3.css && test -s _site/assets/video-lab.js
-          node --check _site/assets/video-lab.js
-          cp data/trend_news.json _site/data/trend_news.json
+          cp assets/studio-v3.css assets/video-lab.js assets/sound-tracker.js assets/clip-studio.js assets/sound-clip.css _site/assets/
+          for asset in studio-v3.css video-lab.js sound-tracker.js clip-studio.js sound-clip.css; do test -s "_site/assets/$asset"; done
+          for js in video-lab.js sound-tracker.js clip-studio.js; do node --check "_site/assets/$js"; done
+          cp data/trend_news.json data/trend_sounds.json _site/data/
           touch _site/.nojekyll
           python - <<'PY'
           import json,urllib.request
           from pathlib import Path
-          url='https://afkpeery.github.io/viralforge-agent/data/trend_news.json'
-          try:
-              with urllib.request.urlopen(url,timeout=9) as response:
-                  data=json.loads(response.read(450000))
-              if isinstance(data.get('feeds'),dict):
-                  Path('_site/data/trend_news.json').write_text(json.dumps(data),encoding='utf8')
-          except Exception as exc:
-              print('Previous news snapshot unavailable:', type(exc).__name__)
+          base='https://afkpeery.github.io/viralforge-agent/data/'
+          for name,field in [('trend_news.json','feeds'),('trend_sounds.json','sounds')]:
+              try:
+                  with urllib.request.urlopen(base+name,timeout=10) as response:
+                      data=json.loads(response.read(700000))
+                  if isinstance(data,dict) and isinstance(data.get(field),dict if field=='feeds' else list):
+                      Path('_site/data',name).write_text(json.dumps(data),encoding='utf8')
+              except Exception as exc:
+                  print('Previous '+name+' snapshot unavailable:', type(exc).__name__)
           PY
           python scripts/update_news.py --output _site/data/trend_news.json
+          python scripts/update_sounds.py --output _site/data/trend_sounds.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
