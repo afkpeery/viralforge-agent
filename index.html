@@ -93,7 +93,7 @@ input,textarea,select{font-size:16px}
 .coach-card small{color:#f1b9cf;line-height:1.5;display:block}
 .coach-note{border-top:1px solid #743b56;padding-top:12px;font-size:13px}
 @media(max-width:780px){.coach-fields{grid-template-columns:1fr}.coach-results{grid-template-columns:1fr}.coach-bottom{align-items:stretch}.coach-bottom button{width:100%}}
-</style></head><body>
+</style><link rel="stylesheet" href="assets/studio-v3.css"></head><body>
 <header><div class="brand"><span class="brand-mark">▼</span> VIRAL<span>FORGE</span><small> // SIGNAL CONTROL</small></div><div class="badge"><span class="status-dot"></span> PUBLIC PREVIEW · FIVE PLATFORMS</div></header>
 <main class="shell">
 <div class="hero"><div class="hero-copy"><div class="hero-kicker">VIRALFORGE / CREATOR DESK</div><h1>Read the post.<br><span>Follow the trend.</span></h1><p>Review a post’s public caption, explore creator headlines by platform, or score a draft before you publish.</p><div class="hero-actions"><button class="button" onclick="showTab('analyze');document.getElementById('view-analyze').scrollIntoView({behavior:'smooth',block:'start'})">⚡ ANALYZE MY POST ↗</button><button class="button secondary" onclick="showTab('trends');document.getElementById('view-trends').scrollIntoView({behavior:'smooth',block:'start'})">◉ EXPLORE TRENDS</button><button class="button secondary" onclick="showTab('news');document.getElementById('view-news').scrollIntoView({behavior:'smooth',block:'start'})">◈ DAILY NEWS</button></div></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="mountains"></div><div class="gridfloor"></div><div class="tv"><div class="tv-title">VIRAL<span>FORGE</span><i>● LIVE SYSTEM</i></div><div class="tv-score"><strong>84</strong><small>/ 100<br>DEMO SIGNAL</small></div><div class="tv-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="tv-bottom">▮▮▮▮ ▮▮▮   SIGNAL DETECTED</div></div><div class="sparkle">✧</div><div class="art-label">THE VIRAL WORKOUT // 198X</div></div></div>
@@ -102,7 +102,54 @@ input,textarea,select{font-size:16px}
 <div class="auth"><label for="key">Local agent key</label><input type="password" id="key" placeholder="Enter AGENT_API_KEY from .env" autocomplete="off"><button class="button secondary" onclick="checkAccount()">Check connection</button></div>
 <nav><button id="tab-analyze" class="active" onclick="showTab('analyze')">01 / Analyze content</button><button id="tab-trends" onclick="showTab('trends')">02 / Community trends</button><button id="tab-news" onclick="showTab('news')">03 / Daily news</button><button id="tab-connect" onclick="showTab('connect')">04 / Connected platforms</button><button id="tab-convert" onclick="showTab('convert')">05 / Conversion lab</button></nav>
 <div id="feedback" aria-live="polite"></div>
-<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post URL to identify the platform, retrieve available public metadata and get practical creative recommendations.</p></div><span class="link-badge">URL FIRST</span></div><form id="linkForm" onsubmit="event.preventDefault();analyzeLink()"><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">ANALYZE LINK ↗</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><section class="coach-panel" aria-labelledby="coach-title">
+<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post URL to identify the platform, retrieve available public metadata and get practical creative recommendations.</p></div><span class="link-badge">URL FIRST</span></div><form id="linkForm" onsubmit="event.preventDefault();analyzeLink()"><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">ANALYZE LINK ↗</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><section class="video-lab" id="videoLab" aria-labelledby="videoLabTitle">
+  <div class="lab-topline">
+    <div>
+      <div class="lab-kicker">◉ VIRALFORGE / EDIT BAY 03 / LOCAL SIGNAL SCAN</div>
+      <h2 id="videoLabTitle">See the video.<br><em>Improve the edit.</em></h2>
+      <p>Load your own video to inspect sampled frames, opening readability, visual pacing and optional audio energy. Your footage stays in this browser—not on a social platform or AI server.</p>
+    </div>
+    <span class="lab-status">● PRIVATE / ON-DEVICE</span>
+  </div>
+  <div class="lab-columns">
+    <div class="lab-capture">
+      <div class="lab-player">
+        <div class="lab-placeholder" id="videoDropText"><div class="tape" aria-hidden="true">▣</div><b>YOUR NEXT CUT STARTS HERE</b><span>Choose a file · MP4 / WebM / MOV</span></div>
+        <video id="videoPreview" hidden playsinline preload="metadata" controls aria-label="Selected video preview"></video>
+      </div>
+      <div class="lab-controls">
+        <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v,video/ogg,.mp4,.webm,.mov,.m4v" aria-label="Choose a video file to analyze">
+        <label class="lab-file-label" for="videoFile">✦ CHOOSE A VIDEO FILE <span aria-hidden="true">↗</span></label>
+        <label class="lab-inline" for="videoPlatform">Target platform
+          <select id="videoPlatform"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option><option value="youtube">YouTube</option><option value="x">X</option><option value="facebook">Facebook</option></select>
+        </label>
+        <label class="lab-inline" for="videoGoal">Campaign objective
+          <select id="videoGoal"><option value="reach">More reach</option><option value="engagement">More engagement</option><option value="leads">More leads</option><option value="sales">More sales</option></select>
+        </label>
+      </div>
+      <label class="lab-audio" for="videoAnalyzeAudio"><input id="videoAnalyzeAudio" type="checkbox" checked> Inspect audio energy locally when supported (small files only; never transcribes speech).</label>
+      <button id="videoAnalyzeBtn" type="button" class="button">INSPECT MY VIDEO ↗</button>
+      <p id="videoFileStatus" class="lab-info" role="status">No video selected. File limit: 250 MB. Audio decode limit: 28 MB / 4 minutes.</p>
+    </div>
+    <div class="lab-monitor">
+      <div class="lab-monitor-label">◉ SIGNAL MONITOR / BROWSER SESSION</div>
+      <h3>No guesses. Measured clues.</h3>
+      <p>We scan visual pixels across sampled moments—not the video's meaning. When supported, we inspect audio loudness patterns, not words or music identities.</p>
+      <div class="lab-meter-row"><span>INSPECTION PROGRESS</span><strong>ON DEVICE</strong></div>
+      <div class="lab-meter"><div id="videoMeterFill"></div></div>
+      <p id="videoLabProgress" role="status" aria-live="polite">Load a creator-owned video to begin.</p>
+      <div class="lab-meter-row"><span>EXPORT</span><span>NO RAW FOOTAGE SHARED</span></div>
+      <p>Use the platform link analyzer for public captions, then add this file scan to understand your own edit rhythm and opening visibility.</p>
+    </div>
+  </div>
+  <div id="videoLabLive" class="lab-live" hidden>
+    <div class="lab-live-head"><h3 id="videoLabLiveTitle">Your edit plan</h3><button class="button secondary" type="button" id="videoCopyReport">COPY / EXPORT REPORT</button></div>
+    <div id="videoLabMetrics" class="lab-evidence" aria-label="Observed local video measurements"></div>
+    <div class="lab-timeline" id="videoLabTimeline" role="img" aria-label="Sampled-frame visual change chart"></div>
+    <div id="videoLabRecommendations" class="lab-plan"></div>
+    <p class="lab-footnote" id="videoLabEvidenceNote"></p>
+  </div>
+</section><section class="coach-panel" aria-labelledby="coach-title">
 <div class="micro-label">CREATIVE LAB // PLATFORM RESPONSE PLAYBOOK</div>
 <h2 id="coach-title">Make your next edit stronger<span class="coach-accent">.</span></h2>
 <p class="coach-intro">Paste your post link above, then optionally describe the first three seconds or add a transcript. Get specific, testable edit ideas for each platform—no secret algorithm claims.</p>
@@ -301,4 +348,4 @@ async function runCreativeCoach(){
  finally{button.disabled=false;button.textContent='GENERATE EDIT PLAN ↗'}
 }
 $('coachRun').addEventListener('click',runCreativeCoach);
-</script></body></html>
+</script><script defer src="assets/video-lab.js"></script></body></html>
