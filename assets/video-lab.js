@@ -129,7 +129,7 @@
       const t = Math.min(end, Math.max(.02, (.15 + (i / (count - 1)) * (duration - .35))));
       await seek(t);
       const frame = samplePixels(ctx, canvas.width, canvas.height);
-      frames.push({t, brightness: frame.brightness, contrast: frame.contrast});
+      frames.push({t, brightness: frame.brightness, contrast: frame.contrast, thumbnail: canvas.toDataURL("image/jpeg", .65)});
       sumLight += frame.brightness;
       if (previous) {
         let delta = 0;
@@ -215,6 +215,11 @@
       return '<i title="'+htmlEscape(p.t.toFixed(1))+'s · '+htmlEscape(Math.round(p.delta*100))+'% sampled frame change" style="height:'+Math.max(7,Math.min(95,p.delta*210+6))+'%"></i>';
     }).join("");
     chart.setAttribute("aria-label","Sampled-frame visual change chart. Greater bars mean larger pixel differences between sampled frames.");
+    const storyboard = get("videoLabStoryboard");
+    const chosen = s.frames.filter(function (_, i) { return i % Math.max(1, Math.ceil(s.frames.length / 8)) === 0; }).slice(0,8);
+    storyboard.innerHTML=chosen.map(function (frame) {
+      return '<figure class="lab-frame"><img src="'+frame.thumbnail+'" alt="Locally sampled video frame at '+htmlEscape(frame.t.toFixed(1))+' seconds"><figcaption>'+htmlEscape(formatTime(frame.t))+' / '+htmlEscape(frame.t.toFixed(1))+'s</figcaption></figure>';
+    }).join("");
     const items=guidance(report);
     recommendationsEl.innerHTML=items.map(function (x,i) {
       return '<article class="lab-recommendation"><div class="lab-index">EXPERIMENT '+String(i+1).padStart(2,"0")+'</div><b>'+htmlEscape(x.title)+'</b><p>'+htmlEscape(x.note)+'</p><p>'+htmlEscape(x.action)+'</p><small>Evaluate: '+htmlEscape(x.measure)+'</small></article>';
