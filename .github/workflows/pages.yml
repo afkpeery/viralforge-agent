@@ -28,8 +28,11 @@ jobs:
           enablement: true
       - name: Prepare static site and fetch news
         run: |
-          mkdir -p _site/data
+          mkdir -p _site/data _site/assets
           cp index.html _site/index.html
+          cp assets/studio-v3.css assets/video-lab.js _site/assets/
+          test -s _site/assets/studio-v3.css && test -s _site/assets/video-lab.js
+          node --check _site/assets/video-lab.js
           cp data/trend_news.json _site/data/trend_news.json
           touch _site/.nojekyll
           python - <<'PY'
