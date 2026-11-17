@@ -157,3 +157,22 @@ The GitHub Pages site offers an immediate platform-specific editorial checklist 
 Example JSON: `{"url":"https://www.youtube.com/watch?v=abcdefghijk","transcript":"...","opening_seconds":"...","goal":"sales"}`.
 
 **Scope:** These are testable suggestions for hooks, pacing, subtitles, shareability, packaging and conversion—not access to proprietary ranking algorithms. The system does not inspect video frames or audio directly from a pasted URL, and it does not claim guaranteed viral reach. For shot-by-shot analysis, a separately authorized media-processing service is still needed.
+
+
+## Studio V3 — local video edit lab
+
+The **Analyze** tab includes a **Video Lab**, available on GitHub Pages and in the FastAPI dashboard. This is a browser-only processing workflow:
+
+1. Paste a supported social post URL if available, or choose a platform from the Video Lab dropdown.
+2. Select a creator-owned video file (MP4, WebM, MOV/M4V when the browser codec supports it; maximum 250 MB).
+3. Optionally enable local audio-energy analysis (up to 28 MB and four minutes, because Web Audio decoding may consume substantial memory).
+4. Press **Inspect My Video** to sample up to 24 frames; examine early image contrast, brightness, and visual differences between sampled moments; create a sampled eight-frame storyboard; and generate platform-specific editing experiments.
+5. Use **Copy / Export Report** to export derived measurements and recommendations as JSON, without exporting the video or sampled thumbnails.
+
+**Privacy:** Video decoding, sampled frames and audio-energy measurements all happen in the browser. The media file is not uploaded to the backend. This method does not infer spoken language, copyrighted music identities, people's identities or scene semantics. It does not retrieve private algorithm data, verify recommendation eligibility or guarantee virality. Since visual change between sparse samples is only a proxy, it is not an exact scene-cut detector. These features generate testable creative hypotheses.
+
+**API:** Python users can send only numeric signal summaries (never raw media) to the authenticated POST /api/video-signals/plan endpoint using the configured X-Agent-Key. The endpoint validates measurement ranges with Pydantic and returns evidence-labelled editing experiments and metrics to evaluate. Account-level performance feedback requires separately connected, approved creator analytics.
+
+**Deployment:** The assets/studio-v3.css and assets/video-lab.js resources are served by FastAPI from /assets and bundled into GitHub Pages by .github/workflows/pages.yml. The Python CI job runs tests and a JavaScript syntax check.
+
+**Limits:** Some browsers cannot decode certain MOV/HEVC/AV1 files, encrypted media or audio tracks. A compatible MP4 (H.264) or WebM export may be needed. Processing is sampled and bounded, not a substitute for human editorial judgment.
