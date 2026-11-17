@@ -7,6 +7,7 @@ from urllib.parse import urlencode, urlsplit, urlunsplit, parse_qsl
 import httpx
 from fastapi import FastAPI, Header, Depends, HTTPException, Query
 from fastapi.responses import RedirectResponse, HTMLResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Annotated
@@ -14,6 +15,7 @@ from .models import Draft, Trend, Observation, Campaign, ConversionEvent, Exposu
 from .storage import Store
 from .engine import orchestrate, top_trends, choose_variants, momentum_opportunities, algorithm_audit
 from . import connectors
+from .video_signals import VideoSignals, recommendations_from_signals
 from .link_analysis import LinkSubmission, LinkError, inspect_public_link
 
 class Settings(BaseSettings):
@@ -39,6 +41,7 @@ app=FastAPI(title='ViralForge Social Intelligence Agent',version='0.1.0',
  description='Consent-based creator analytics and independent reach/conversion optimization. No viral guarantees.')
 app.add_middleware(CORSMiddleware,allow_origins=settings.allowed_origins.split(','),
                    allow_methods=['GET','POST'], allow_headers=['X-Agent-Key','Content-Type'])
+app.mount('/assets', StaticFiles(directory=str(Path(__file__).resolve().parent.parent/'assets')), name='assets')
 
 async def authorize(x_agent_key: Annotated[str|None, Header()]=None):
     if not settings.agent_api_key or not x_agent_key or not secrets.compare_digest(x_agent_key,settings.agent_api_key):
@@ -218,6 +221,11 @@ async def review_caption(platform: str, caption: str) -> str:
 
 # Creator-supplied transcript and opening details improve recommendations without claiming footage access.
 from .creative_coach import CreativeBrief, improvement_plan
+
+@app.post('/api/video-signals/plan',dependencies=[Auth])
+def video_signal_plan(signals: VideoSignals):
+    """Rank editing experiments using locally measured numeric features; no media upload."""
+    return recommendations_from_signals(signals)
 
 @app.post('/api/creative-coach',dependencies=[Auth])
 async def creative_coach(submission: CreativeBrief):
