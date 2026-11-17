@@ -176,3 +176,41 @@ The **Analyze** tab includes a **Video Lab**, available on GitHub Pages and in t
 **Deployment:** The assets/studio-v3.css and assets/video-lab.js resources are served by FastAPI from /assets and bundled into GitHub Pages by .github/workflows/pages.yml. The Python CI job runs tests and a JavaScript syntax check.
 
 **Limits:** Some browsers cannot decode certain MOV/HEVC/AV1 files, encrypted media or audio tracks. A compatible MP4 (H.264) or WebM export may be needed. Processing is sampled and bounded, not a substitute for human editorial judgment.
+
+## Sound Radar — scheduled sound observations
+
+Open **Viral sounds** in the dashboard. The GitHub Pages publishing workflow checks an **approved HTTPS sound-trends provider every eight hours** (UTC; GitHub Actions schedules may start late), publishes `data/trend_sounds.json`, and retains the last good snapshot when a provider fails. It labels sounds with provider source, platform, region, observation time, and source-reported rank, 24-hour uses and growth when supplied.
+
+**To activate real rankings**, open this repository's **Settings → Secrets and variables → Actions** and create `SOUND_FEED_URL` pointing to your authorized HTTPS JSON chart, plus optional `SOUND_FEED_BEARER_TOKEN` if the provider requires Bearer authentication. These are GitHub Actions secrets; never put them in browser JavaScript. Run **Publish ViralForge and refresh news + sound radar** manually or wait for its scheduled refresh. The UI's *Reload snapshot* button refreshes the deployed JSON, not the upstream provider.
+
+Example **schema only, not live trending data**:
+
+```json
+{
+  "source": "Your authorized sound chart",
+  "sounds": [{
+    "id": "example-provider-id",
+    "platform": "tiktok",
+    "title": "Example sound",
+    "artist": "Example creator",
+    "region": "US",
+    "observed_at": "2026-11-17T05:00:00Z",
+    "source_url": "https://www.tiktok.com/music/example",
+    "preview_url": "",
+    "rank": 1,
+    "uses_24h": 1000,
+    "total_uses": 10000,
+    "growth_24h_pct": 25.0
+  }]
+}
+```
+
+Required properties are `platform`, `title`, `source_url` (HTTPS), and `observed_at` (timezone-aware ISO-8601, no more than fourteen days old). Optional `id`, `artist`, `region`, `preview_url`, `rank`, `uses_24h`, `total_uses`, and `growth_24h_pct` supply detail. Supported platforms: TikTok, Instagram, YouTube, Facebook, X. Without a provider, the page explicitly indicates that the feed is unconfigured; it never fabricates viral sound rankings. The standard platform creator APIs do **not** supply unrestricted platform-wide sound rankings. Use sound previews only where provider licensing permits it.
+
+For direct Python updates, export `SOUND_FEED_URL` and optionally `SOUND_FEED_BEARER_TOKEN` and run `python scripts/update_sounds.py --output data/trend_sounds.json`. The GitHub Actions workflow uses secrets instead.
+
+## Clip Studio — local video clipping and downloads
+
+Open **Clip studio**, upload an MP4, MOV, WebM or compatible video that you own/have rights to edit (maximum **250 MB**), and use precise seconds for an **IN/OUT** clip or **Auto-split** the complete video into 15-, 30-, 60- or 120-second segments. Preview any segment, change its output filename, download it individually, or export all clips as one ZIP. Up to 24 clips per project; individual exports limited to 120 seconds.
+
+Clip Studio uses browser-native **MediaRecorder**, canvas capture and **Web Audio** and processes at playback speed. It re-encodes to MP4 or WebM depending on supported browser codecs; exports are not frame-accurate, and audio support depends on browser decoding. Keep the tab active while exporting. No server-side upload, social platform video download, DRM circumvention, or account access is involved. For lossless or frame-accurate editing, a future authenticated FFmpeg worker would be required.
