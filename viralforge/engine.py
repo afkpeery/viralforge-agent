@@ -117,7 +117,8 @@ def reach_analysis(draft:Draft,posts,all_trends):
     feat=stable_features(draft.caption,draft.hook,draft.duration_seconds)
     hook_quality=clamp((feat[0]*.35+feat[1]*.20+feat[2]*.25+feat[5]*.20))
     caption_quality=clamp(.6*(1-abs(len(draft.caption.split())-55)/160)+.4*min(len(terms(draft.topic+' '+draft.caption))/20,1))
-    style_fit=feat[6]
+    is_short=draft.platform=='youtube'
+    style_fit=float(draft.duration_seconds<=180) if is_short else feat[6]
     novelty=1.0-max((similarity(draft.caption,p.caption) for p in posts if p.caption),default=0)
     hashtag_fit=clamp((len(draft.hashtags)+len(suggestions['recommended']))/5)
     score=100*(.30*hook_quality+.19*caption_quality+.15*style_fit+.15*trend_fit+.13*novelty+.08*hashtag_fit)
@@ -134,7 +135,11 @@ def reach_analysis(draft:Draft,posts,all_trends):
     if novelty<.45:rec.append('Differentiate this concept from your previous captions and angles.')
     if trend_fit<.35:rec.append('No strong niche-relevant trend signal yet. Verify a fresh regional trend feed before borrowing a format.')
     if not draft.hashtags and not suggestions['recommended']:rec.append('Add 2–5 precise topic/community hashtags, not generic #fyp spam.')
-    if draft.duration_seconds>70:rec.append('Consider a tighter edit with an early payoff; compare retention from past posts before shortening automatically.')
+    if is_short:
+        rec.append('Plan a vertical or square frame and use a specific title that matches the opening. Show the result early, then cut straight to how it happens.')
+        if draft.duration_seconds>180:
+            rec.append('Trim the draft to 180 seconds or less for YouTube Shorts.')
+    elif draft.duration_seconds>70:rec.append('Consider a tighter edit with an early payoff; compare retention from past posts before shortening automatically.')
     if not rec:rec.append('Test two distinct hooks on future comparable posts, then measure early retention and reach.')
     result['recommendations']=rec
     return result

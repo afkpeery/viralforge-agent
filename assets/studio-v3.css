@@ -105,3 +105,45 @@ footer{color:#f2cbdc!important}
 .lab-frame{margin:0;flex:0 0 clamp(112px,14vw,158px);border:1px solid #873e61;background:#170c18;border-radius:11px;padding:6px;box-shadow:0 7px 23px #0006}
 .lab-frame img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#06070a}
 .lab-frame figcaption{font-size:11px;font-weight:800;letter-spacing:.5px;color:#ffd4e3;padding:7px 3px 2px}
+
+/* Analyze Content */
+.link-output { justify-content: flex-start; gap: 8px; overflow-wrap: anywhere; }
+.link-output p, .link-tips { font-size: 15px; line-height: 1.55; }
+.link-output .result-head { font-size: 17px; }
+.link-output .read-note { margin: 0; }
+.link-tips { margin: 0; padding-inline-start: 22px; }
+.link-tips li + li { margin-top: 6px; }
+.link-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+#copyPostStatus:empty { margin: 0; }
+#postUrl[aria-invalid="true"] { border-color: #ffabc6 !important; }
+.lab-player { border: 2px dashed #b87294; transition: border-color .18s, box-shadow .18s; }
+.lab-player.is-dragging { border-color: #ffd4e4; box-shadow: 0 0 0 4px #ff9abd55, inset 0 0 38px #ff53874d; }
+.lab-placeholder .tape {
+  width: 58px; height: 58px; margin-bottom: 14px;
+  border: 1px solid #ec92b5; border-radius: 16px;
+  background: #48203a; transform: none; box-shadow: none;
+  transition: transform .18s;
+}
+.is-dragging .lab-placeholder .tape { transform: translateY(-5px); }
+.lab-placeholder b { font-size: 19px; }
+.lab-placeholder span, .lab-audio, .lab-inline, .lab-info, .lab-monitor p,
+.lab-recommendation p, .lab-evidence span, .lab-footnote { font-size: 14px; }
+.lab-topline p { font-size: 16px; }
+.lab-info { overflow-wrap: anywhere; }
+.lab-status, .lab-kicker, .lab-monitor .lab-monitor-label { font-size: 12px; letter-spacing: .05em; }
+.lab-file-label { font-size: 15px; border-style: solid; }
+#videoFile:disabled + .lab-file-label { opacity: .65; cursor: wait; }
+#videoAnalyzeBtn { font-size: 15px; }
+#videoAnalyzeBtn:disabled { cursor: default; }
+.lab-monitor { display: block; }
+#shortsDraftHint { padding: 12px; border-left: 3px solid #ff87ae; background: #3a152c; border-radius: 4px; }
+.lab-live:not([hidden]) { animation: lab-reveal .24s ease-out; }
+@keyframes lab-reveal { from { opacity: 0; transform: translateY(6px); } }
+@media (max-width: 500px) {
+  .lab-capture, .lab-monitor { padding: 14px; }
+  .video-lab { padding: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab-live:not([hidden]) { animation: none; }
+  .lab-player, .lab-placeholder .tape { transition: none; }
+}

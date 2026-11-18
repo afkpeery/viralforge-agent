@@ -29,3 +29,22 @@ def test_core_endpoints(monkeypatch,tmp_path):
     assert client.post('/api/events/conversion',headers=headers,json=event).json()['duplicate']
     stats=client.get('/api/campaigns/brand_launch/optimize',headers=headers).json()['variants']
     assert stats[0]['clicks']==1 and stats[0]['conversions']==1
+
+
+def test_youtube_shorts_draft_duration_feedback(monkeypatch, tmp_path):
+    monkeypatch.setattr(agent.settings, 'agent_api_key', 'private-test-key')
+    monkeypatch.setattr(agent, 'store', Store(str(tmp_path / 'shorts.db')))
+    client = TestClient(agent.app)
+    draft = {
+        'platform': 'youtube', 'niche': 'filmmaking', 'topic': 'Lighting a scene',
+        'hook': 'Light a scene with one lamp', 'caption': 'A one-light setup',
+    }
+    headers = {'X-Agent-Key': 'private-test-key'}
+    for duration, format_fit in [(180, 100), (181, 0)]:
+        response = client.post('/api/analyze', headers=headers,
+                               json={**draft, 'duration_seconds': duration})
+        assert response.status_code == 200, response.text
+        reach = response.json()['reach_model']
+        assert reach['signals']['format_fit'] == format_fit
+        assert any('vertical or square' in tip for tip in reach['recommendations'])
+        assert any('180 seconds' in tip for tip in reach['recommendations']) == (duration > 180)
