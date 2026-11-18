@@ -8,6 +8,7 @@
   const textPanel = get("videoDropText");
   const status = get("videoFileStatus");
   const run = get("videoAnalyzeBtn");
+  const dropZone = get("videoDrop");
   const platformSelect = get("videoPlatform");
   const progressText = get("videoLabProgress");
   const progressFill = get("videoMeterFill");
@@ -16,7 +17,7 @@
   const chart = get("videoLabTimeline");
   const recommendationsEl = get("videoLabRecommendations");
   const audioOpt = get("videoAnalyzeAudio");
-  let previewUrl = null, lastReport = null, busy = false;
+  let previewUrl = null, selectedFile = null, lastReport = null, busy = false;
 
   function htmlEscape(v) {
     return String(v === null || v === undefined ? "" : v).replace(/[&<>"']/g, function (c) {
@@ -25,14 +26,10 @@
   }
   function setProgress(message, value) {
     progressText.textContent = message;
-    progressFill.style.width = Math.max(0, Math.min(100, value)) + "%";
-  }
-  function platform() {
-    const raw = get("postUrl") && get("postUrl").value.trim();
-    if (raw && typeof postIdentity === "function") {
-      try { return postIdentity(raw).platform; } catch (_) { /* standalone file is still valid */ }
-    }
-    return platformSelect.value;
+    const percent = Math.round(Math.max(0, Math.min(100, value)));
+    progressFill.style.width = percent + "%";
+    progressFill.parentElement.setAttribute("aria-valuenow", String(percent));
+    get("videoMeterPercent").textContent = percent + "%";
   }
   function formatTime(t) {
     if (!isFinite(t)) return "—";
@@ -58,44 +55,63 @@
       timer = setTimeout(function () { clean(); reject(new Error("Media loading timed out. Try a smaller MP4 or WebM file.")); }, limitMs);
     });
   }
-  async function loadSelectedFile() {
-    const file = fileInput.files && fileInput.files[0];
-    if (!file) return;
-    lastReport = null;
-    results.hidden = true;
-    setProgress("File selected. Ready to inspect frames.", 0);
-    if (file.size > 250 * 1024 * 1024) {
-      status.textContent = "File exceeds the 250 MB local-analysis limit.";
-      fileInput.value = "";
+  function setBusy(value) {
+    busy = value;
+    fileInput.disabled = value;
+    run.disabled = value || !selectedFile;
+  }
+  async function loadSelectedFile(files) {
+    if (!files.length) return;
+    if (busy) {
+      status.textContent = "Wait for the current video operation to finish.";
+      return;
+    }
+    if (files.length !== 1) {
+      status.textContent = "Choose or drop one video at a time.";
+      return;
+    }
+    const file = files[0];
+    if (!file.size || file.size > 250 * 1024 * 1024) {
+      status.textContent = "Choose a non-empty video under 250 MB.";
       return;
     }
     if (!/^video\//.test(file.type) && !/\.(mp4|webm|mov|m4v|ogv)$/i.test(file.name)) {
-      status.textContent = "Choose a video file (MP4, WebM, MOV or M4V).";
-      fileInput.value = "";
+      status.textContent = "Choose a video file such as MP4, WebM, MOV, M4V or OGV.";
       return;
     }
-    if (busy) return;
+    selectedFile = null;
+    lastReport = null;
+    results.hidden = true;
+    video.hidden = true;
+    textPanel.hidden = false;
+    setBusy(true);
+    setProgress("Loading the video preview…", 0);
     video.pause();
     cleanupUrl();
-    previewUrl = URL.createObjectURL(file);
-    const loaded = listenUntil(video, "loadedmetadata", "error", 16000);
-    video.src = previewUrl;
-    video.load();
-    status.textContent = file.name + " · " + (file.size / (1024*1024)).toFixed(1) + " MB";
+    status.textContent = file.name;
     try {
+      previewUrl = URL.createObjectURL(file);
+      const loaded = listenUntil(video, "loadedmetadata", "error", 16000);
+      video.src = previewUrl;
+      video.load();
       await loaded;
-      if (!isFinite(video.duration) || video.duration <= 0 || video.videoWidth < 2) {
-        throw new Error("This video does not expose usable duration or frames in your browser.");
+      if (!Number.isFinite(video.duration) || video.duration <= 0 || video.videoWidth < 2) {
+        throw new Error("This file has no readable video frames. Try an MP4 (H.264) or WebM export.");
       }
+      selectedFile = file;
       textPanel.hidden = true;
       video.hidden = false;
-      status.textContent += " · " + formatTime(video.duration) + " · " + video.videoWidth + "×" + video.videoHeight;
-      setProgress("Ready to sample visual frames and optional audio. Nothing is uploaded.", 0);
+      status.textContent = [file.name, (file.size / (1024 * 1024)).toFixed(1) + " MB",
+        formatTime(video.duration), video.videoWidth + "×" + video.videoHeight].join(" · ");
+      setProgress("Preview ready. Select Inspect video to begin.", 0);
     } catch (error) {
-      video.hidden = true;
-      textPanel.hidden = false;
-      status.textContent = error.message;
+      video.removeAttribute("src");
+      video.load();
       cleanupUrl();
+      status.textContent = error.message;
+      setProgress("Choose another video to continue.", 0);
+    } finally {
+      setBusy(false);
     }
   }
   async function seek(t) {
@@ -230,10 +246,14 @@
   }
   async function analyze() {
     if (busy) return;
-    const file=fileInput.files && fileInput.files[0];
+    const file=selectedFile;
     if (!file || video.hidden) { setProgress("Choose a supported local video first.",0); return; }
     if (!video.duration || !isFinite(video.duration)) { setProgress("Video duration is unavailable.",0);return; }
-    busy=true;run.disabled=true;run.textContent="INSPECTING FRAMES…";results.hidden=true;video.pause();video.controls=false;
+    const platform=platformSelect.value;
+    const goal=get("videoGoal").value;
+    setBusy(true);
+    run.textContent="Inspecting video…";
+    results.hidden=true;video.pause();video.controls=false;
     try {
       const duration=video.duration;
       const signals=await visualSignals(duration);
@@ -241,17 +261,35 @@
       const audio=await audioSignals(file,duration);
       signals.quiet_segment_fraction=audio.quiet_segment_fraction;
       signals.near_peak_fraction=audio.near_peak_fraction;
-      const report={platform:platform(),goal:get("videoGoal").value,duration_seconds:duration,signals,audio_note:audio.note};
+      const report={platform,goal,duration_seconds:duration,signals,audio_note:audio.note};
       lastReport=report;
       render(report);
       video.currentTime=0;
     } catch (error) {
       setProgress("Analysis stopped: "+error.message,0);
     } finally {
-      busy=false;run.disabled=false;run.textContent="INSPECT MY VIDEO ↗";video.controls=true;
+      setBusy(false);run.textContent="Inspect video";video.controls=true;
     }
   }
-  get("videoFile").addEventListener("change",loadSelectedFile);
+  fileInput.addEventListener("change", () => {
+    const files = Array.from(fileInput.files);
+    fileInput.value = "";
+    void loadSelectedFile(files);
+  });
+  dropZone.addEventListener("dragover", (event) => {
+    if (!event.dataTransfer.types.includes("Files")) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = busy ? "none" : "copy";
+    dropZone.classList.toggle("is-dragging", !busy);
+  });
+  dropZone.addEventListener("dragleave", (event) => {
+    if (!dropZone.contains(event.relatedTarget)) dropZone.classList.remove("is-dragging");
+  });
+  dropZone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    dropZone.classList.remove("is-dragging");
+    void loadSelectedFile(event.dataTransfer.files);
+  });
   run.addEventListener("click",analyze);
   const copy=get("videoCopyReport");
   copy.addEventListener("click",async function () {

@@ -4,9 +4,10 @@ from typing import Literal
 from pydantic import BaseModel, Field, HttpUrl, field_validator
 
 Platform = Literal['tiktok', 'instagram']
+DraftPlatform = Literal['tiktok', 'instagram', 'youtube']
 
 class Draft(BaseModel):
-    platform: Platform
+    platform: DraftPlatform
     niche: str = Field(min_length=2, max_length=100)
     community: str = Field(default='', max_length=100)
     region: str = Field(default='US', max_length=12)

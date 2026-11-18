@@ -96,30 +96,30 @@ input,textarea,select{font-size:16px}
 </style><link rel="stylesheet" href="assets/studio-v3.css"><link rel="stylesheet" href="assets/sound-clip.css"></head><body>
 <header><div class="brand"><span class="brand-mark">▼</span> VIRAL<span>FORGE</span><small> // SIGNAL CONTROL</small></div><div class="badge"><span class="status-dot"></span> PUBLIC PREVIEW · FIVE PLATFORMS</div></header>
 <main class="shell">
-<div class="hero"><div class="hero-copy"><div class="hero-kicker">VIRALFORGE / CREATOR DESK</div><h1>Read the post.<br><span>Follow the trend.</span></h1><p>Paste a social post link or inspect your own video locally. Find opportunities in the first seconds, frame pacing and audio energy—then tailor the edit for five major platforms.</p><div class="hero-actions"><button class="button" onclick="showTab('analyze');document.getElementById('view-analyze').scrollIntoView({behavior:'smooth',block:'start'})">⚡ ANALYZE MY POST ↗</button><button class="button secondary" onclick="showTab('analyze');document.getElementById('videoLab').scrollIntoView({behavior:'smooth',block:'center'})">▣ OPEN VIDEO LAB</button><button class="button secondary" onclick="showTab('trends');document.getElementById('view-trends').scrollIntoView({behavior:'smooth',block:'start'})">◉ EXPLORE TRENDS</button><button class="button secondary" onclick="showTab('news');document.getElementById('view-news').scrollIntoView({behavior:'smooth',block:'start'})">◈ DAILY NEWS</button></div></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="mountains"></div><div class="gridfloor"></div><div class="tv"><div class="tv-title">VIRAL<span>FORGE</span><i>● LIVE SYSTEM</i></div><div class="tv-score"><strong>84</strong><small>/ 100<br>DEMO SIGNAL</small></div><div class="tv-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="tv-bottom">▮▮▮▮ ▮▮▮   SIGNAL DETECTED</div></div><div class="sparkle">✧</div><div class="art-label">THE VIRAL WORKOUT // 198X</div></div></div>
+<div class="hero"><div class="hero-copy"><div class="hero-kicker">VIRALFORGE / CREATOR DESK</div><h1>Read the post.<br><span>Follow the trend.</span></h1><p>Paste a social post link or inspect your own video locally. Find opportunities in the first seconds, frame pacing and audio energy—then tailor the edit for five major platforms.</p><div class="hero-actions"><button class="button" onclick="showTab('analyze');document.getElementById('view-analyze').scrollIntoView({behavior:'smooth',block:'start'})">⚡ ANALYZE MY POST ↗</button><button class="button secondary" onclick="showTab('analyze');document.getElementById('videoLab').scrollIntoView({block:'start'})">▣ OPEN VIDEO LAB</button><button class="button secondary" onclick="showTab('trends');document.getElementById('view-trends').scrollIntoView({behavior:'smooth',block:'start'})">◉ EXPLORE TRENDS</button><button class="button secondary" onclick="showTab('news');document.getElementById('view-news').scrollIntoView({behavior:'smooth',block:'start'})">◈ DAILY NEWS</button></div></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="mountains"></div><div class="gridfloor"></div><div class="tv"><div class="tv-title">VIRAL<span>FORGE</span><i>● LIVE SYSTEM</i></div><div class="tv-score"><strong>84</strong><small>/ 100<br>DEMO SIGNAL</small></div><div class="tv-chart"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="tv-bottom">▮▮▮▮ ▮▮▮   SIGNAL DETECTED</div></div><div class="sparkle">✧</div><div class="art-label">THE VIRAL WORKOUT // 198X</div></div></div>
 <div id="hostingNote" class="hosting-note hidden" role="status" style="padding:15px 18px;background:#48152e;color:#ffdfeb;border:1px solid #ff76a0;border-radius:10px;margin:0 0 20px;font-size:13px">PUBLIC WEBSITE PREVIEW — Link analysis recognizes five networks and uses public metadata when available; creator-selected video files are sampled locally in your browser and are not uploaded. Video signals measure pixels and audio energy, not storytelling meaning or private performance. Draft scores are illustrative; account connections and conversion tracking require the Python backend.</div>
 <div class="news-ribbon" aria-label="Latest social platform news"><div class="news-ribbon-label">◉ NEWSWIRE / DAILY</div><div class="news-ribbon-window"><div class="news-ribbon-track" id="newsTicker"><span>Updating the five-platform social newswire…</span></div></div><button type="button" id="tickerPause" aria-pressed="false" aria-controls="newsTicker">Pause</button></div>
 <div class="auth"><label for="key">Local agent key</label><input type="password" id="key" placeholder="Enter AGENT_API_KEY from .env" autocomplete="off"><button class="button secondary" onclick="checkAccount()">Check connection</button></div>
 <nav><button id="tab-analyze" class="active" onclick="showTab('analyze')">01 / Analyze content</button><button id="tab-sounds" onclick="showTab('sounds')">02 / Viral sounds</button><button id="tab-clips" onclick="showTab('clips')">03 / Clip studio</button><button id="tab-trends" onclick="showTab('trends')">04 / Community trends</button><button id="tab-news" onclick="showTab('news')">05 / Daily news</button><button id="tab-connect" onclick="showTab('connect')">06 / Connected platforms</button><button id="tab-convert" onclick="showTab('convert')">07 / Conversion lab</button></nav>
 <div id="feedback" aria-live="polite"></div>
-<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post URL to identify the platform, retrieve available public metadata and get practical creative recommendations.</p></div><span class="link-badge">URL FIRST</span></div><form id="linkForm" onsubmit="event.preventDefault();analyzeLink()"><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">ANALYZE LINK ↗</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><section class="video-lab" id="videoLab" aria-labelledby="videoLabTitle">
+<section id="view-analyze"><div class="link-grid" style="margin-bottom:21px"><div class="linkbox"><div class="link-intro"><div><div class="micro-label"><span class="mini-dot">●</span> POST INTELLIGENCE // LINK INPUT</div><h2 style="margin:8px 0 0;color:#fff;font-size:26px">Analyze a post</h2><p style="color:#fff;font-size:14px;max-width:600px">Paste a public post link to start, or enter a URL and select Analyze link.</p></div></div><form id="linkForm" novalidate><label for="postUrl">TikTok, Instagram, X, Facebook or YouTube URL</label><div class="link-input-row"><input id="postUrl" type="url" inputmode="url" autocomplete="url" required placeholder="https://www.youtube.com/shorts/..." aria-describedby="linkPrivacy"><button id="linkAnalyzeBtn" class="button" type="submit">Analyze link</button></div></form><div class="platform-chips" aria-label="Supported post platforms"><span>♪ TikTok</span><span>◎ Instagram</span><span>𝕏 X</span><span>f Facebook</span><span>▶ YouTube</span></div><p id="linkPrivacy" class="read-note">Reviews use the public title or caption. When available, AI suggests a hook rewrite. Private posts may have no readable text.</p></div><div class="link-output" id="linkResults" aria-live="polite" aria-atomic="true"><h3>Post feedback</h3><p>Platform details and edit suggestions will appear here.</p></div><section class="video-lab" id="videoLab" aria-labelledby="videoLabTitle">
   <div class="lab-topline">
     <div>
-      <div class="lab-kicker">◉ VIRALFORGE / EDIT BAY 03 / LOCAL SIGNAL SCAN</div>
+      <div class="lab-kicker">Video lab</div>
       <h2 id="videoLabTitle">See the video.<br><em>Improve the edit.</em></h2>
-      <p>Load your own video to inspect sampled frames, opening readability, visual pacing and optional audio energy. Your footage stays in this browser—not on a social platform or AI server.</p>
+      <p>Preview your video and check opening readability, pacing, and audio levels. Your footage stays on this device.</p>
     </div>
-    <span class="lab-status">● PRIVATE / ON-DEVICE</span>
+    <span class="lab-status">On-device analysis</span>
   </div>
   <div class="lab-columns">
     <div class="lab-capture">
-      <div class="lab-player">
-        <div class="lab-placeholder" id="videoDropText"><div class="tape" aria-hidden="true">▣</div><b>YOUR NEXT CUT STARTS HERE</b><span>Choose a file · MP4 / WebM / MOV</span></div>
+      <div class="lab-player" id="videoDrop">
+        <div class="lab-placeholder" id="videoDropText"><div class="tape" aria-hidden="true">↑</div><b>Drag and drop a video</b><span>MP4, WebM, MOV, M4V or OGV · up to 250 MB</span></div>
         <video id="videoPreview" hidden playsinline preload="metadata" controls aria-label="Selected video preview"></video>
       </div>
       <div class="lab-controls">
-        <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v,video/ogg,.mp4,.webm,.mov,.m4v" aria-label="Choose a video file to analyze">
-        <label class="lab-file-label" for="videoFile">✦ CHOOSE A VIDEO FILE <span aria-hidden="true">↗</span></label>
+        <input id="videoFile" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-m4v,video/ogg,.mp4,.webm,.mov,.m4v,.ogv" aria-describedby="videoFileStatus">
+        <label class="lab-file-label" for="videoFile">Choose video</label>
         <label class="lab-inline" for="videoPlatform">Target platform
           <select id="videoPlatform"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option><option value="youtube">YouTube</option><option value="x">X</option><option value="facebook">Facebook</option></select>
         </label>
@@ -128,18 +128,16 @@ input,textarea,select{font-size:16px}
         </label>
       </div>
       <label class="lab-audio" for="videoAnalyzeAudio"><input id="videoAnalyzeAudio" type="checkbox" checked> Inspect audio energy locally when supported (small files only; never transcribes speech).</label>
-      <button id="videoAnalyzeBtn" type="button" class="button">INSPECT MY VIDEO ↗</button>
-      <p id="videoFileStatus" class="lab-info" role="status">No video selected. File limit: 250 MB. Audio decode limit: 28 MB / 4 minutes.</p>
+      <button id="videoAnalyzeBtn" type="button" class="button" disabled>Inspect video</button>
+      <p id="videoFileStatus" class="lab-info" role="status">No video selected. Optional audio analysis supports files up to 28 MB and 4 minutes.</p>
     </div>
     <div class="lab-monitor">
-      <div class="lab-monitor-label">◉ SIGNAL MONITOR / BROWSER SESSION</div>
-      <h3>No guesses. Measured clues.</h3>
-      <p>We scan visual pixels across sampled moments—not the video's meaning. When supported, we inspect audio loudness patterns, not words or music identities.</p>
-      <div class="lab-meter-row"><span>INSPECTION PROGRESS</span><strong>ON DEVICE</strong></div>
-      <div class="lab-meter"><div id="videoMeterFill"></div></div>
-      <p id="videoLabProgress" role="status" aria-live="polite">Load a creator-owned video to begin.</p>
-      <div class="lab-meter-row"><span>EXPORT</span><span>NO RAW FOOTAGE SHARED</span></div>
-      <p>Use the platform link analyzer for public captions, then add this file scan to understand your own edit rhythm and opening visibility.</p>
+      <div class="lab-monitor-label">Analysis status</div>
+      <h3>Frame and audio checks</h3>
+      <p>Frame samples reveal changes in brightness and pacing. Optional audio analysis measures loudness.</p>
+      <div class="lab-meter-row"><span id="videoMeterLabel">Inspection progress</span><strong id="videoMeterPercent" aria-hidden="true">0%</strong></div>
+      <div class="lab-meter" role="progressbar" aria-labelledby="videoMeterLabel" aria-valuenow="0"><div id="videoMeterFill"></div></div>
+      <p id="videoLabProgress" role="status" aria-live="polite">Choose or drop a video to begin.</p>
     </div>
   </div>
   <div id="videoLabLive" class="lab-live" hidden>
@@ -158,19 +156,20 @@ input,textarea,select{font-size:16px}
 <div class="coach-bottom"><label for="coachGoal">Optimization goal <select id="coachGoal"><option value="reach">Reach</option><option value="engagement">Engagement</option><option value="leads">Leads</option><option value="sales">Sales</option></select></label>
 <button class="button" id="coachRun" type="button">GENERATE EDIT PLAN ↗</button></div>
 <div id="coachResults" aria-live="polite" class="coach-results"><p>Choose a video URL above and generate a platform-specific edit plan.</p></div>
-</section><div class="link-output" id="linkResults" aria-live="polite"><div class="micro-label">AWAITING SIGNAL</div><h3>Ready when you are.</h3><p>Your platform, post information, and recommendations will appear here after you paste a link.</p><span class="link-badge" style="align-self:flex-start">● FIVE PLATFORMS SUPPORTED</span></div></div><div class="layout">
-<div class="panel"><h2>Optional: analyze your own draft</h2><p>What are you about to post? Provide your real concept; the agent will score its preparation, not promise virality.</p>
-<div class="fields"><div><label>Platform</label><select id="platform"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option></select></div><div><label>Goal</label><select id="goal"><option value="reach">Audience reach</option><option value="leads">Qualified leads</option><option value="sales">Sales / revenue</option></select></div><div><label>Community / niche</label><input id="niche" value="filmmaking" placeholder="e.g. streetwear, fitness"></div><div><label>Region</label><input id="region" value="US" maxlength="12"></div></div>
-<label>Post topic</label><input id="topic" value="How a cinematic commercial gets filmed" placeholder="Specific video concept">
-<label>First 1–3 seconds / hook</label><input id="hook" value="This is how we turned a small shop into a movie set" placeholder="First words, text or visual promise">
-<label>Caption</label><textarea id="caption" rows="3">Most people never see the work behind a cinematic commercial. Here's the process behind the shoot. #filmmaking #behindthescenes</textarea>
-<label>Script / shot notes (optional)</label><textarea id="script" rows="2" placeholder="Narration or visual sequence"></textarea>
-<div class="fields"><div><label>Video duration (sec)</label><input id="duration" type="number" min="1" max="600" value="28"></div><div><label>Existing hashtags</label><input id="hashtags" value="#filmmaking, #behindthescenes" placeholder="Comma-separated hashtags"></div></div>
-<label>Offer / viewer benefit</label><input id="offer" placeholder="e.g. Free video marketing audit">
-<label>Call to action</label><input id="cta" placeholder="e.g. Book a call through the link">
-<label>Landing page (optional)</label><input id="landing" type="url" placeholder="https://yourdomain.com/offer">
-<div class="bar"><button class="button" id="analyzeBtn" onclick="analyze()">Analyze this content ↗</button><span class="hint">Uses your stored posts + time-stamped trend observations</span></div></div>
-<div class="panel" id="analysisResults"><div class="empty"><div style="font-size:52px;color:var(--accent)">◎</div><b>Your content intelligence lives here.</b><span>Enter a creative concept and run the analysis to see two separate model scores, prioritized changes and hashtag evidence.</span></div></div></div></section>
+</section></div><div class="layout">
+<div class="panel" id="draftPanel"><h2>Optional: analyze your own draft</h2><p>Describe your next post to get a readiness score and practical edit suggestions.</p>
+<form id="draftForm"><div class="fields"><div><label for="platform">Platform</label><select id="platform" aria-describedby="shortsDraftHint"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option><option value="youtube">YouTube Shorts</option></select></div><div><label for="goal">Goal</label><select id="goal"><option value="reach">Audience reach</option><option value="leads">Qualified leads</option><option value="sales">Sales / revenue</option></select></div><div><label for="niche">Community / niche</label><input id="niche" required value="filmmaking" placeholder="e.g. streetwear, fitness"></div><div><label for="region">Region</label><input id="region" value="US" maxlength="12"></div></div>
+<p id="shortsDraftHint" hidden>For YouTube Shorts, plan a vertical or square video up to 3 minutes. Show the payoff early and use a title that matches the opening.</p>
+<label for="topic">Post topic</label><input id="topic" required value="How a cinematic commercial gets filmed" placeholder="Specific video concept">
+<label for="hook">First 1–3 seconds / hook</label><input id="hook" required value="This is how we turned a small shop into a movie set" placeholder="First words, text or visual promise">
+<label for="caption">Caption</label><textarea id="caption" required rows="3">Most people never see the work behind a cinematic commercial. Here's the process behind the shoot. #filmmaking #behindthescenes</textarea>
+<label for="script">Script / shot notes (optional)</label><textarea id="script" rows="2" placeholder="Narration or visual sequence"></textarea>
+<div class="fields"><div><label for="duration">Video duration (sec)</label><input id="duration" required type="number" min="1" max="600" value="28"></div><div><label for="hashtags">Existing hashtags</label><input id="hashtags" value="#filmmaking, #behindthescenes" placeholder="Comma-separated hashtags"></div></div>
+<label for="offer">Offer / viewer benefit</label><input id="offer" placeholder="e.g. Free video marketing audit">
+<label for="cta">Call to action</label><input id="cta" placeholder="e.g. Book a call through the link">
+<label for="landing">Landing page (optional)</label><input id="landing" type="url" placeholder="https://yourdomain.com/offer">
+<div class="bar"><button class="button" id="analyzeBtn" type="submit">Analyze this content ↗</button><span class="hint">Uses stored posts and trend observations when available.</span></div><p id="draftStatus" role="status"></p></form></div>
+<div class="panel" id="analysisResults" aria-live="polite"><div class="empty"><div style="font-size:52px;color:var(--accent)">◎</div><b>Your content intelligence lives here.</b><span>Enter a creative concept and run the analysis to see two separate model scores, prioritized changes and hashtag evidence.</span></div></div></div></section>
 
 <section id="view-sounds" class="hidden" aria-labelledby="soundTitle">
   <div class="sound-shell">
@@ -213,25 +212,37 @@ function showTab(id){['analyze','sounds','clips','trends','news','connect','conv
 function feedback(msg,error=false){$('feedback').innerHTML='<div class="alert '+(error?'err':'')+'">'+esc(msg)+'</div>';}
 const STATIC_PREVIEW=location.hostname.endsWith('.github.io')||location.protocol==='file:'||location.search.includes('static_preview=1');
 if(STATIC_PREVIEW)document.getElementById('hostingNote').classList.remove('hidden');
-async function api(path,method='GET',body){
+const shortsAdvice='Use a specific title that matches the opening. Show the result early, then cut straight to how it happens.';
+function updateDraftPlatform() {
+ $('shortsDraftHint').hidden=$('platform').value!=='youtube';
+}
+$('platform').addEventListener('change',updateDraftPlatform);
+updateDraftPlatform();
+$('draftForm').addEventListener('submit',event=>{
+ event.preventDefault();
+ analyze();
+});
+async function api(path,method='GET',body,signal){
  if(STATIC_PREVIEW){
   if(path==='/api/analyze'){
    const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));
-   const signals={hook_clarity:clamp(40+(body.hook||'').trim().length*.85),topic_focus:clamp(45+(body.topic||'').trim().length*.55),duration_fit:clamp(100-Math.abs((body.duration_seconds||30)-30)*1.8),hashtag_focus:clamp(65+(body.hashtags?.length||0)*5),fresh_trend_fit:0};
+   const shorts=body.platform==='youtube';
+   const fitsShorts=body.duration_seconds<=180;
+   const signals={hook_clarity:clamp(40+(body.hook||'').trim().length*.85),topic_focus:clamp(45+(body.topic||'').trim().length*.55),duration_fit:shorts?(fitsShorts?100:0):clamp(100-Math.abs((body.duration_seconds||30)-30)*1.8),hashtag_focus:clamp(65+(body.hashtags?.length||0)*5),fresh_trend_fit:0};
    const reach=Math.round((signals.hook_clarity+signals.topic_focus+signals.duration_fit+signals.hashtag_focus)/4);
    const cv=clamp(20+((body.offer||'').length>10?30:0)+((body.call_to_action||'').length>5?30:0)+(body.landing_page?20:0));
-   return {reach_model:{reach_readiness_score:reach,signals,hashtags:{recommended:[],message:'No verified live hashtags in static preview. Connect a permitted trend feed.'},recommendations:['Preview-only scores use a basic browser heuristic and are not predictive.','Lead with a clear opening visual or question.','Use specific tags matched to your niche instead of generic promises of virality.'],training:{reason:'Static preview — no historical account data'},estimated_top_quartile_probability:null},conversion_model:{conversion_readiness_score:cv,recommendations:['Give viewers one clear action and a destination to take it.']},data_quality:{connected_post_count:0,fresh_trend_count:0},optimization_priority:'Connect the authorized Python backend for evidence-based recommendations.'};
+   return {reach_model:{reach_readiness_score:reach,signals,hashtags:{recommended:[],message:'No verified live hashtags in static preview. Connect a permitted trend feed.'},recommendations:[...(shorts?[shortsAdvice,...(fitsShorts?[]:['Trim the draft to 180 seconds or less for Shorts.'])]:[]),'Preview-only scores use a basic browser heuristic and are not predictive.','Lead with a clear opening visual or question.','Use specific tags matched to your niche instead of generic promises of virality.'],training:{reason:'Static preview — no historical account data'},estimated_top_quartile_probability:null},conversion_model:{conversion_readiness_score:cv,recommendations:['Give viewers one clear action and a destination to take it.']},data_quality:{connected_post_count:0,fresh_trend_count:0},optimization_priority:'Connect the authorized Python backend for evidence-based recommendations.'};
   }
   if(path.startsWith('/api/trends/'))return {trends:[],fresh_count:0};
   throw Error('This action requires the FastAPI backend. GitHub Pages hosts a static design preview only.');
  }
  const key=$('key').value.trim();if(!key)throw Error('Enter your AGENT_API_KEY above.');
- const r=await fetch(path,{method,headers:{'X-Agent-Key':key,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
+ const r=await fetch(path,{method,signal,headers:{'X-Agent-Key':key,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
  const json=await r.json();if(!r.ok)throw Error(typeof json.detail==='string'?json.detail:JSON.stringify(json.detail||json));return json;
 }
-const btnBusy=async(id,operation)=>{const btn=$(id),old=btn.textContent;btn.disabled=true;btn.textContent='Working…';try{await operation()}catch(e){feedback(e.message,true)}finally{btn.disabled=false;btn.textContent=old}};
+const btnBusy=async(id,operation,onError=error=>feedback(error.message,true))=>{const btn=$(id),old=btn.textContent;btn.disabled=true;btn.textContent='Working…';try{await operation()}catch(e){onError(e)}finally{btn.disabled=false;btn.textContent=old}};
 function signalRow(name,value){return `<div class="signal"><span>${esc(name.replaceAll('_',' '))}</span><strong>${Number(value).toFixed(0)}/100</strong></div><div class="progress"><div class="fill" style="width:${Math.max(0,Math.min(100,Number(value)))}%"></div></div>`}
-async function analyze(){await btnBusy('analyzeBtn',async()=>{const draft={platform:$('platform').value,goal:$('goal').value,niche:$('niche').value,region:$('region').value,topic:$('topic').value,hook:$('hook').value,caption:$('caption').value,script:$('script').value,duration_seconds:Number($('duration').value),hashtags:$('hashtags').value.split(',').map(x=>x.trim()).filter(Boolean),offer:$('offer').value,call_to_action:$('cta').value,landing_page:$('landing').value||null};const r=await api('/api/analyze','POST',draft);const a=r.reach_model,c=r.conversion_model;let html=`<div class="statrow"><div class="stat lime"><div class="val">${esc(a.reach_readiness_score)}</div><small>Reach readiness / 100</small></div><div class="stat purple"><div class="val">${esc(c.conversion_readiness_score)}</div><small>Conversion readiness / 100</small></div></div><div class="sectiontitle">Reach signal breakdown</div>`;for(const [k,v] of Object.entries(a.signals))html+=signalRow(k,v);html+=`<div class="sectiontitle">Relevant niche hashtags</div>`;if(a.hashtags.recommended.length){for(const tag of a.hashtags.recommended)html+=`<span class="tag">${esc(tag.hashtag)} <em>${esc(tag.score)} · ${esc(tag.age_hours)}h old</em></span>`}else html+=`<div class="note">${esc(a.hashtags.message)}</div>`;html+=`<div class="sectiontitle">Creative improvements</div>`;for(const x of [...a.recommendations,...c.recommendations])html+=`<div class="recommendation">→ ${esc(x)}</div>`;html+=`<div class="sectiontitle">Evidence quality</div><div class="note">${esc(r.data_quality.connected_post_count)} observed posts · ${esc(r.data_quality.fresh_trend_count)} fresh trend observations. ${esc(a.training.reason||a.training.note||'')}</div>`;if(a.estimated_top_quartile_probability!==null)html+=`<div class="note" style="margin-top:9px">Exploratory estimated chance of outperforming your historical 75th-percentile post: ${Math.round(a.estimated_top_quartile_probability*100)}%. Not a guarantee.</div>`;html+=`<div class="alert">NEXT ACTION: ${esc(r.optimization_priority)}</div>`;$('analysisResults').innerHTML=html;feedback('Analysis complete. Scores represent model readiness, not a guaranteed viral outcome.');})}
+async function analyze(){$('draftStatus').textContent='Reviewing draft…';await btnBusy('analyzeBtn',async()=>{const draft={platform:$('platform').value,goal:$('goal').value,niche:$('niche').value,region:$('region').value,topic:$('topic').value,hook:$('hook').value,caption:$('caption').value,script:$('script').value,duration_seconds:Number($('duration').value),hashtags:$('hashtags').value.split(',').map(x=>x.trim()).filter(Boolean),offer:$('offer').value,call_to_action:$('cta').value,landing_page:$('landing').value||null};const r=await api('/api/analyze','POST',draft);const a=r.reach_model,c=r.conversion_model;let html=`<div class="statrow"><div class="stat lime"><div class="val">${esc(a.reach_readiness_score)}</div><small>Reach readiness / 100</small></div><div class="stat purple"><div class="val">${esc(c.conversion_readiness_score)}</div><small>Conversion readiness / 100</small></div></div><div class="sectiontitle">Reach signal breakdown</div>`;for(const [k,v] of Object.entries(a.signals))html+=signalRow(k,v);html+=`<div class="sectiontitle">Relevant niche hashtags</div>`;if(a.hashtags.recommended.length){for(const tag of a.hashtags.recommended)html+=`<span class="tag">${esc(tag.hashtag)} <em>${esc(tag.score)} · ${esc(tag.age_hours)}h old</em></span>`}else html+=`<div class="note">${esc(a.hashtags.message)}</div>`;html+=`<div class="sectiontitle">Creative improvements</div>`;for(const x of [...a.recommendations,...c.recommendations])html+=`<div class="recommendation">→ ${esc(x)}</div>`;html+=`<div class="sectiontitle">Evidence quality</div><div class="note">${esc(r.data_quality.connected_post_count)} observed posts · ${esc(r.data_quality.fresh_trend_count)} fresh trend observations. ${esc(a.training.reason||a.training.note||'')}</div>`;if(a.estimated_top_quartile_probability!==null)html+=`<div class="note" style="margin-top:9px">Exploratory estimated chance of outperforming your historical 75th-percentile post: ${Math.round(a.estimated_top_quartile_probability*100)}%. Not a guarantee.</div>`;html+=`<div class="alert">NEXT ACTION: ${esc(r.optimization_priority)}</div>`;$('analysisResults').innerHTML=html;$('draftStatus').textContent='Draft feedback is ready.';},error=>{$('draftStatus').textContent=error.message;})}
 async function loadTrends(){try{const path=`/api/trends/${$('trendPlatform').value}?region=${encodeURIComponent($('trendRegion').value)}&niche=${encodeURIComponent($('trendNiche').value)}&community=${encodeURIComponent($('trendCommunity').value)}`;const r=await api(path);$('trendResults').classList.remove('empty');$('trendResults').innerHTML=r.trends.length?r.trends.map((t,i)=>`<div class="recommendation"><div class="row"><b>${esc(i+1)}. ${esc(t.hashtag)}</b><span class="pill">${esc(t.score)} score</span></div><div class="note">${esc(t.source)} · ${esc(t.age_hours)} hours old · ${t.live?'Recent':'Stale'} · relevance ${esc(t.relevance)}</div></div>`).join(''):'<div class="empty"><b>No observations available</b><span>Import a verified trend feed first. No invented live trending data will appear.</span></div>';feedback(`${r.trends.length} trend signals returned; ${r.fresh_count} observed within the past 24 hours.`)}catch(e){feedback(e.message,true)}}
 async function refreshTrends(){try{const r=await api('/api/trends/refresh','POST');feedback(`Imported ${r.imported} observations from configured licensed feed.`);await loadTrends()}catch(e){feedback(e.message,true)}}
 async function importTrends(){try{const t=JSON.parse($('trendJSON').value);if(!Array.isArray(t))throw Error('Expected JSON array.');const r=await api('/api/trends/import','POST',t);feedback(`Stored ${r.stored} time-stamped observations.`);await loadTrends()}catch(e){feedback(e.message,true)}}
@@ -308,18 +319,96 @@ async function localCaptionReview(platform,caption) {
  finally { session?.destroy(); }
 }
 
-async function analyzeLink(){const out=$('linkResults'),btn=$('linkAnalyzeBtn');let info;
- try{info=postIdentity($('postUrl').value.trim());}catch(error){out.innerHTML='<div class="link-badge">INVALID LINK</div><h3>Could not recognize that post.</h3><p>'+esc(error.message)+'</p>';return;}
- btn.disabled=true;btn.textContent='READING PUBLIC POST…';out.innerHTML='<div class="micro-label">RECEIVING SIGNAL // '+esc(PLATFORM_NAMES[info.platform])+'</div><h3>Checking public embed metadata…</h3><p>Results may be limited by the platform’s access rules.</p>';
- try{let r;if(STATIC_PREVIEW){const meta=await publicBrowserMetadata(info);r={...info,post_id:info.id,metadata:{title_or_caption:meta.title,author:meta.author},evidence_level:meta.title?'public_metadata_only':'url_identification_only',recommendations:meta.title?captionAdvice(meta.title):['The public link was recognized. Metadata was not available through the public preview.','Lead with a clear opening visual or question and test variations on your own audience.','Connect approved metrics for verified engagement, retention, reach and conversions.'],availability_note:meta.title?'A public caption/title was retrieved from public embed metadata.':'No public caption was available for this link. Video footage and private metrics have not been analyzed.',viral_probability:null};}
- else {r=await api('/api/link/analyze','POST',{url:info.url});}
- let title=r.metadata?.title_or_caption||'',author=r.metadata?.author||'';
- const review = r.ai_review || await localCaptionReview(info.platform,title);
- const guidance = review ? '<div class="micro-label">AI CAPTION REVIEW</div><p>'+esc(review)+'</p>' : title ? '<div class="micro-label">CAPTION CHECKS</div>'+r.recommendations.map(x=>'<div class="recommendation">'+esc(x)+'</div>').join('') : '';
- out.innerHTML='<span class="link-badge">✓ '+esc(PLATFORM_NAMES[info.platform])+' RECOGNIZED</span>'+ (title?'<div class="result-head">'+esc(title)+'</div>':'<div class="result-head">Public post link detected</div>')+(author?'<p>Creator: '+esc(author)+'</p>':'')+'<p><a href="'+esc(info.url)+'" rel="noopener noreferrer" target="_blank">Open source post ↗</a></p>'+guidance+'<div class="read-note">'+esc(r.availability_note)+' No real-time view metrics, video understanding or predicted viral probability is implied.</div>';
- }catch(error){out.innerHTML='<div class="link-badge">LINK RECOGNIZED</div><h3>Metadata unavailable.</h3><p>'+esc(error.message)+'</p><p>The URL is valid; provider access can require an approved integration.</p>';}
- finally{btn.disabled=false;btn.textContent='ANALYZE LINK ↗'}
+let lastLinkReview;
+async function analyzeLink() {
+ const out=$('linkResults'), btn=$('linkAnalyzeBtn'), input=$('postUrl');
+ if(btn.disabled) return;
+ let info;
+ try {
+  info=postIdentity(input.value);
+  input.setAttribute('aria-invalid','false');
+ } catch(error) {
+  input.setAttribute('aria-invalid','true');
+  out.innerHTML='<h3>Check the post link</h3><p>'+esc(error.message)+'</p>';
+  return;
+ }
+
+ btn.disabled=true;
+ input.readOnly=true;
+ btn.textContent='Checking link…';
+ const platformName=PLATFORM_NAMES[info.platform];
+ out.innerHTML='<h3>'+esc(platformName)+' link recognized</h3><p>Looking for a public title or caption…</p>';
+ try {
+  let result, fallbackNote='';
+  if(!STATIC_PREVIEW && $('key').value.trim()) {
+   try {
+    result=await api('/api/link/analyze','POST',{url:info.url},AbortSignal.timeout(35000));
+   } catch {
+    fallbackNote='The connected service was unavailable. ';
+   }
+  }
+  if(!result) {
+   const metadata=await publicBrowserMetadata(info);
+   result={metadata:{title_or_caption:metadata.title,author:metadata.author}};
+  }
+  const title=result.metadata?.title_or_caption || '';
+  const author=result.metadata?.author || '';
+  lastLinkReview={url:info.url, title};
+  const tips=title
+   ? result.recommendations?.length ? result.recommendations : captionAdvice(title)
+   : coachPlan(info.platform,'','','reach','').slice(0,2).map(card=>card.suggestion);
+  const note=fallbackNote+(title?'Feedback uses the public title or caption.':'A public title or caption could not be retrieved. These suggestions are based on the platform. Add an opening description or transcript in the edit planner for more specific feedback.');
+  out.innerHTML='<h3>'+esc(platformName)+' post feedback</h3>'
+   +(title?'<p class="result-head">'+esc(title)+'</p>':'')
+   +(author?'<p>Creator: '+esc(author)+'</p>':'')
+   +(result.ai_review?'<p>'+esc(result.ai_review)+'</p>':'')
+   +'<ul class="link-tips">'+tips.map(tip=>'<li>'+esc(tip)+'</li>').join('')+'</ul>'
+   +'<p class="read-note">'+esc(note)+' For footage feedback, use the Video Lab below.</p>'
+   +'<div class="link-actions"><a href="'+esc(info.url)+'" rel="noopener noreferrer" target="_blank">Open post ↗</a><button class="button secondary" type="button" id="copyPostLink">Copy link</button></div><p id="copyPostStatus" role="status"></p>';
+  $('copyPostLink').addEventListener('click',async ()=>{
+   const status=$('copyPostStatus');
+   try {
+    await navigator.clipboard.writeText(info.url);
+    status.textContent='Post link copied.';
+   } catch {
+    if(postUrlChanged(info.url)) {
+     status.textContent='Open the post to copy its address.';
+    } else {
+     input.select();
+     status.textContent='Link selected. Use your device’s copy command.';
+    }
+   }
+  });
+
+  if(title && !result.ai_review) {
+   const reviewing=out.firstElementChild;
+   void localCaptionReview(info.platform,title).then(review=>{
+    if(!review || out.firstElementChild!==reviewing || postUrlChanged(info.url)) return;
+    const paragraph=document.createElement('p');
+    paragraph.textContent='AI caption review: '+review;
+    out.querySelector('.link-tips').before(paragraph);
+   });
+  }
+ } catch {
+  out.innerHTML='<h3>Could not finish the review</h3><p>Try the link again or add your opening description in the edit planner.</p>';
+ } finally {
+  btn.disabled=false;
+  input.readOnly=false;
+  btn.textContent='Analyze link';
+ }
 }
+function postUrlChanged(url) {
+ try { return postIdentity($('postUrl').value).url!==url; }
+ catch { return true; }
+}
+$('linkForm').addEventListener('submit',event=>{
+ event.preventDefault();
+ analyzeLink();
+});
+$('postUrl').addEventListener('input',()=> $('postUrl').removeAttribute('aria-invalid'));
+$('postUrl').addEventListener('paste',()=>{
+ if(!$('postUrl').readOnly) setTimeout(analyzeLink,0);
+});
 /* Auto-refreshed 5-platform editorial news; no fake in-app trending statistics. */
 let newsSnapshot=null, newsPlatform='tiktok';
 function newsDate(iso){if(!iso)return 'Never synced';const d=new Date(iso);return Number.isNaN(+d)?'Unknown date':d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
@@ -365,13 +454,14 @@ async function runCreativeCoach(){
  button.disabled=true;button.textContent='BUILDING EDIT PLAN…';
  try{
   let plan,level='creator-provided details';
-  if(!STATIC_PREVIEW){
+  if(!STATIC_PREVIEW && $('key').value.trim()){
    const result=await api('/api/creative-coach','POST',{url:info.url,opening_seconds:opening,transcript,goal});
    plan=result.recommendations.map(x=>({focus:x.focus,suggestion:x.suggestion,metric:x.validation_metric,priority:x.priority}));
    level=result.evidence_level;
   }else{
-   plan=coachPlan(info.platform,transcript,opening,goal,'');
-   level=transcript?'creator-provided transcript':opening?'creator-provided opening':'URL recognition only';
+   const caption=lastLinkReview?.url===info.url ? lastLinkReview.title : '';
+   plan=coachPlan(info.platform,transcript,opening,goal,caption);
+   level=transcript?'creator-provided transcript':opening?'creator-provided opening':caption?'public caption':'URL recognition only';
   }
   target.innerHTML=plan.map((x,i)=>'<article class="coach-card"><div class="micro-label">EDIT '+(i+1)+' / '+esc(PLATFORM_NAMES[info.platform])+'</div><h3>'+esc(x.focus)+'</h3><p>'+esc(x.suggestion)+'</p><small>Measure: '+esc(x.metric)+'</small></article>').join('')+'<div class="coach-note"><b>Evidence:</b> '+esc(level)+'. These are creative experiments, not guaranteed ranking triggers. This preview has not watched the video or measured private platform signals. Validate changes against actual creator analytics.</div>';
  }catch(e){target.innerHTML='<p>'+esc(e.message)+'</p>';}
